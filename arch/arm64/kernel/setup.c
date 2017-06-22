@@ -45,6 +45,7 @@
 #include <linux/of_platform.h>
 #include <linux/dma-mapping.h>
 #include <linux/efi.h>
+#include <linux/screen_info.h>
 
 #include <asm/fixmap.h>
 #include <asm/cputype.h>
@@ -60,6 +61,8 @@
 #include <asm/memblock.h>
 #include <asm/psci.h>
 #include <asm/efi.h>
+
+struct screen_info screen_info;
 
 unsigned int processor_id;
 EXPORT_SYMBOL(processor_id);
