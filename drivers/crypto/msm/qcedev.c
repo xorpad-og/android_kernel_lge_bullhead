@@ -1722,12 +1722,15 @@ long qcedev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 		err = qcedev_hash_final(&qcedev_areq, handle);
 		if (err)
 			return err;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 		if (handle->sha_ctxt.diglen > QCEDEV_MAX_SHA_DIGEST) {
 			pr_err("Invalid sha_ctxt.diglen %d\n",
 					handle->sha_ctxt.diglen);
 			return -EINVAL;
 		}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		qcedev_areq.sha_op_req.diglen = handle->sha_ctxt.diglen;
 		memcpy(&qcedev_areq.sha_op_req.digest[0],
 				&handle->sha_ctxt.digest[0],
@@ -1756,12 +1759,15 @@ long qcedev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 		err = qcedev_hash_final(&qcedev_areq, handle);
 		if (err)
 			return err;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 		if (handle->sha_ctxt.diglen > QCEDEV_MAX_SHA_DIGEST) {
 			pr_err("Invalid sha_ctxt.diglen %d\n",
 					handle->sha_ctxt.diglen);
 			return -EINVAL;
 		}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		qcedev_areq.sha_op_req.diglen =	handle->sha_ctxt.diglen;
 		memcpy(&qcedev_areq.sha_op_req.digest[0],
 				&handle->sha_ctxt.digest[0],

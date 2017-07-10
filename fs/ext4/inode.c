@@ -661,6 +661,7 @@ has_zeroout:
 		ret = check_block_validity(inode, map);
 		if (ret != 0)
 			return ret;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 		/*
 		 * Inodes with freshly allocated blocks where contents will be
@@ -675,6 +676,8 @@ has_zeroout:
 			if (ret)
 				return ret;
 		}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 	return retval;
 }
@@ -1130,6 +1133,18 @@ static int ext4_write_end(struct file *file,
 	int i_size_changed = 0;
 
 	trace_ext4_write_end(inode, pos, len, copied);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	if (ext4_test_inode_state(inode, EXT4_STATE_ORDERED_MODE)) {
+		ret = ext4_jbd2_file_inode(handle, inode);
+		if (ret) {
+			unlock_page(page);
+			page_cache_release(page);
+			goto errout;
+		}
+	}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (ext4_has_inline_data(inode)) {
 		ret = ext4_write_inline_data_end(inode, pos, len,
 						 copied, page);

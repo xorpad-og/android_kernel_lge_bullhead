@@ -926,6 +926,7 @@ static int venus_hfi_vote_active_buses(void *dev,
 	} else if (!data) {
 		dprintk(VIDC_ERR, "Invalid voting data\n");
 		return -EINVAL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	} else if (num_data > MAX_SUPPORTED_INSTANCES_COUNT) {
 		dprintk(VIDC_ERR, "Invalid number of instances.\n");
 		return -EINVAL;
@@ -935,6 +936,18 @@ static int venus_hfi_vote_active_buses(void *dev,
 	if (!cached_vote_data) {
 		dprintk(VIDC_ERR, "Invalid bus load vote data\n");
 		return -EINVAL;
+=======
+	}
+
+	/* (Re-)alloc memory to store the new votes (in case we internally
+	 * re-vote after power collapse, which is transparent to client) */
+	cached_vote_data = krealloc(device->bus_load.vote_data, num_data *
+			sizeof(*cached_vote_data), GFP_KERNEL);
+	if (!cached_vote_data) {
+		dprintk(VIDC_ERR, "Can't alloc memory to cache bus votes\n");
+		rc = -ENOMEM;
+		goto err_no_mem;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	/* Alloc & init the load table */
@@ -3738,6 +3751,7 @@ static int venus_hfi_init_bus(struct venus_hfi_device *device)
 		dprintk(VIDC_DBG, "Registered bus client %s\n", name);
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	device->bus_load.vote_data = (struct vidc_bus_vote_data *)
 			kzalloc(sizeof(struct vidc_bus_vote_data) *
 				MAX_SUPPORTED_INSTANCES_COUNT, GFP_KERNEL);
@@ -3748,6 +3762,11 @@ static int venus_hfi_init_bus(struct venus_hfi_device *device)
 		goto err_init_bus;
 	}
 	device->bus_load.vote_data_count = 0;
+=======
+	device->bus_load.vote_data = NULL;
+	device->bus_load.vote_data_count = 0;
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return rc;
 err_init_bus:
 	venus_hfi_deinit_bus(device);

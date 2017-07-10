@@ -1,4 +1,8 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2011-2014, 2017 The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -396,7 +400,12 @@ static void process_ssid_range_report(uint8_t *buf, uint32_t len,
 	ptr += header_len;
 	/* Don't account for pkt_id and length */
 	read_len += header_len - (2 * sizeof(uint32_t));
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_lock(&driver->msg_mask_lock);
+=======
+
+	mutex_lock(&msg_mask.lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	driver->max_ssid_count[smd_info->peripheral] = header->count;
 	for (i = 0; i < header->count && read_len < len; i++) {
 		ssid_range = (struct diag_ssid_range_t *)ptr;
@@ -438,7 +447,11 @@ static void process_ssid_range_report(uint8_t *buf, uint32_t len,
 		}
 		driver->msg_mask_tbl_count += 1;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_unlock(&driver->msg_mask_lock);
+=======
+	mutex_unlock(&msg_mask.lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static void diag_build_time_mask_update(uint8_t *buf,
@@ -463,11 +476,20 @@ static void diag_build_time_mask_update(uint8_t *buf,
 		       __func__, range->ssid_first, range->ssid_last);
 		return;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_lock(&driver->msg_mask_lock);
 	build_mask = (struct diag_msg_mask_t *)(driver->build_time_mask->ptr);
 	num_items = range->ssid_last - range->ssid_first + 1;
 
 	for (i = 0; i < driver->bt_msg_mask_tbl_count; i++, build_mask++) {
+=======
+
+	build_mask = (struct diag_msg_mask_t *)(driver->build_time_mask->ptr);
+	num_items = range->ssid_last - range->ssid_first + 1;
+
+	mutex_lock(&driver->build_time_mask->lock);
+	for (i = 0; i < driver->msg_mask_tbl_count; i++, build_mask++) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (build_mask->ssid_first != range->ssid_first)
 			continue;
 		found = 1;
@@ -484,7 +506,11 @@ static void diag_build_time_mask_update(uint8_t *buf,
 
 	if (found)
 		goto end;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	new_size = (driver->bt_msg_mask_tbl_count + 1) *
+=======
+	new_size = (driver->msg_mask_tbl_count + 1) *
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		   sizeof(struct diag_msg_mask_t);
 	temp = krealloc(driver->build_time_mask->ptr, new_size, GFP_KERNEL);
 	if (!temp) {
@@ -499,10 +525,16 @@ static void diag_build_time_mask_update(uint8_t *buf,
 		       __func__, err);
 		goto end;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	driver->bt_msg_mask_tbl_count += 1;
 end:
 	mutex_unlock(&driver->msg_mask_lock);
 	return;
+=======
+	driver->msg_mask_tbl_count += 1;
+end:
+	mutex_unlock(&driver->build_time_mask->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static void process_build_mask_report(uint8_t *buf, uint32_t len,

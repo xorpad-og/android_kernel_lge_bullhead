@@ -6942,6 +6942,7 @@ static void mutex_lock_double(struct mutex *a, struct mutex *b)
 	mutex_lock_nested(b, SINGLE_DEPTH_NESTING);
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /*
  * Variation on perf_event_ctx_lock_nested(), except we take two context
  * mutexes.
@@ -6973,6 +6974,8 @@ again:
 	return gctx;
 }
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 /**
  * sys_perf_event_open - open a performance event, associate it to a task/cpu
  *
@@ -7187,6 +7190,7 @@ SYSCALL_DEFINE5(perf_event_open,
 	}
 
 	if (move_group) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		gctx = __perf_event_ctx_lock_double(group_leader, ctx);
 
 		/*
@@ -7207,11 +7211,19 @@ SYSCALL_DEFINE5(perf_event_open,
 				move_group = 0;
 			}
 		}
+=======
+		gctx = group_leader->ctx;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 		/*
 		 * See perf_event_ctx_lock() for comments on the details
 		 * of swizzling perf_event::ctx.
 		 */
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		mutex_lock_double(&gctx->mutex, &ctx->mutex);
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		perf_remove_from_context(group_leader, false);
 
 		/*
@@ -7253,7 +7265,11 @@ SYSCALL_DEFINE5(perf_event_open,
 	perf_unpin_context(ctx);
 
 	if (move_group) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		perf_event_ctx_unlock(group_leader, gctx);
+=======
+		mutex_unlock(&gctx->mutex);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		put_ctx(gctx);
 	}
 	mutex_unlock(&ctx->mutex);
@@ -7284,11 +7300,14 @@ SYSCALL_DEFINE5(perf_event_open,
 	fd_install(event_fd, event_file);
 	return event_fd;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 err_locked:
 	if (move_group)
 		perf_event_ctx_unlock(group_leader, gctx);
 	mutex_unlock(&ctx->mutex);
 	fput(event_file);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 err_context:
 	perf_unpin_context(ctx);
 	put_ctx(ctx);

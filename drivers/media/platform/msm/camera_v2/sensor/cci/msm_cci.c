@@ -359,11 +359,15 @@ static int32_t msm_cci_i2c_read(struct v4l2_subdev *sd,
 	enum cci_i2c_queue_t queue = QUEUE_1;
 	struct cci_device *cci_dev = NULL;
 	struct msm_camera_cci_i2c_read_cfg *read_cfg = NULL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	CDBG("%s line %d\n", __func__, __LINE__);
 	cci_dev = v4l2_get_subdevdata(sd);
 	master = c_ctrl->cci_info->cci_i2c_master;
 	read_cfg = &c_ctrl->cfg.cci_i2c_read_cfg;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	if (master >= MASTER_MAX || master < 0) {
 		pr_err("%s:%d Invalid I2C master %d\n",
@@ -371,6 +375,8 @@ static int32_t msm_cci_i2c_read(struct v4l2_subdev *sd,
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	mutex_lock(&cci_dev->cci_master_info[master].mutex);
 
 	/*

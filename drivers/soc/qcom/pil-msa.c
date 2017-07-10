@@ -469,12 +469,17 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 
 	dev_info(pil->dev, "MBA: loading from %pa to %pa\n", &mba_phys,
 								&mba_phys_end);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	/* Load the MBA image into memory */
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	data = fw ? fw->data : NULL;
 	if (!data) {
 		dev_err(pil->dev, "MBA data is NULL\n");
 		ret = -ENOMEM;
 		goto err_mss_reset;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/* Load the MBA image into memory */
 	count = fw->size;
 
@@ -487,6 +492,10 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 
 	memcpy(mba_virt, data, count);
 	/* Ensure memcpy of the MBA memory is done before loading the DP */
+=======
+	count = fw->size;
+	memcpy(mba_virt, data, count);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	wmb();
 
 	ret = pil_mss_reset(pil);

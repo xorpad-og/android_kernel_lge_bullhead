@@ -45,6 +45,10 @@
 #include <linux/of_platform.h>
 #include <linux/dma-mapping.h>
 #include <linux/efi.h>
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+#include <linux/screen_info.h>
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 #include <asm/fixmap.h>
 #include <asm/cputype.h>
@@ -61,6 +65,11 @@
 #include <asm/psci.h>
 #include <asm/efi.h>
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+struct screen_info screen_info;
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 unsigned int processor_id;
 EXPORT_SYMBOL(processor_id);
 

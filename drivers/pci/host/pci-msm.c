@@ -1,4 +1,8 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1691,6 +1695,7 @@ static void msm_pcie_sel_debug_testcase(struct msm_pcie_dev_t *dev,
 			dev->res[base_sel - 1].base,
 			wr_offset, wr_mask, wr_value);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		base_sel_size = resource_size(dev->res[base_sel - 1].resource);
 
 		if (wr_offset >  base_sel_size - 4 ||
@@ -1700,6 +1705,10 @@ static void msm_pcie_sel_debug_testcase(struct msm_pcie_dev_t *dev,
 		else
 			msm_pcie_write_reg_field(dev->res[base_sel - 1].base,
 				wr_offset, wr_mask, wr_value);
+=======
+		msm_pcie_write_reg_field(dev->res[base_sel - 1].base,
+			wr_offset, wr_mask, wr_value);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 		break;
 	case 13: /* dump all registers of base_sel */

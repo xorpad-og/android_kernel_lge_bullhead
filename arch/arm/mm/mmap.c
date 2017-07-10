@@ -89,7 +89,11 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 
 		vma = find_vma(mm, addr);
 		if (TASK_SIZE - len >= addr &&
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		    (!vma || addr + len <= vm_start_gap(vma)))
+=======
+		    (!vma || addr + len <= vma->vm_start))
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			return addr;
 	}
 
@@ -140,7 +144,11 @@ arch_get_unmapped_area_topdown(struct file *filp, const unsigned long addr0,
 			addr = PAGE_ALIGN(addr);
 		vma = find_vma(mm, addr);
 		if (TASK_SIZE - len >= addr &&
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				(!vma || addr + len <= vm_start_gap(vma)))
+=======
+				(!vma || addr + len <= vma->vm_start))
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			return addr;
 	}
 

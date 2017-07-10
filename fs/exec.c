@@ -1464,7 +1464,10 @@ static int do_execve_common(const char *filename,
 	bool clear_in_exec;
 	int retval;
 	const struct cred *cred = current_cred();
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	bool is_su;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/*
 	 * We move the actual failure in case of RLIMIT_NPROC excess from
@@ -1541,14 +1544,21 @@ static int do_execve_common(const char *filename,
 	if (retval < 0)
 		goto out;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/* search_binary_handler can release file and it may be freed */
 	is_su = d_is_su(file->f_dentry);
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	retval = search_binary_handler(bprm);
 	if (retval < 0)
 		goto out;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (is_su && capable(CAP_SYS_ADMIN)) {
+=======
+	if (d_is_su(file->f_dentry) && capable(CAP_SYS_ADMIN)) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		current->flags |= PF_SU;
 		su_exec();
 	}

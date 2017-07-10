@@ -697,8 +697,11 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
 		inet_sk(newsk)->inet_sport = inet_rsk(req)->loc_port;
 		newsk->sk_write_space = sk_stream_write_space;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		inet_sk(newsk)->mc_list = NULL;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		newsk->sk_mark = inet_rsk(req)->ir_mark;
 
 		newicsk->icsk_retransmits = 0;

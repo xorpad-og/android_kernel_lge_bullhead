@@ -116,11 +116,23 @@ static int ecryptfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 	int rc;
 	struct file *lower_file;
 	struct inode *inode;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct ecryptfs_getdents_callback buf;
+=======
+	struct ecryptfs_getdents_callback buf = {
+		.dirent = dirent,
+		.dentry = file->f_path.dentry,
+		.filldir = filldir,
+		.filldir_called = 0,
+		.entries_written = 0,
+		.ctx.actor = ecryptfs_filldir
+	};
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	lower_file = ecryptfs_file_to_lower(file);
 	lower_file->f_pos = file->f_pos;
 	inode = file_inode(file);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	memset(&buf, 0, sizeof(buf));
 	buf.dirent = dirent;
 	buf.dentry = file->f_path.dentry;
@@ -128,6 +140,8 @@ static int ecryptfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 	buf.filldir_called = 0;
 	buf.entries_written = 0;
 	buf.ctx.actor = ecryptfs_filldir;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	rc = iterate_dir(lower_file, &buf.ctx);
 	file->f_pos = lower_file->f_pos;
 	if (rc < 0)

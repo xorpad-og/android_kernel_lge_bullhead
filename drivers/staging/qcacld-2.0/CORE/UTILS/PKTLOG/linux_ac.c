@@ -82,12 +82,20 @@ static int pktlog_attach(struct ol_softc *sc);
 static void pktlog_detach(struct ol_softc *sc);
 static int pktlog_open(struct inode *i, struct file *f);
 static int pktlog_release(struct inode *i, struct file *f);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+static int pktlog_mmap(struct file *f, struct vm_area_struct *vma);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 static ssize_t pktlog_read(struct file *file, char *buf, size_t nbytes,
 			   loff_t * ppos);
 
 static struct file_operations pktlog_fops = {
 	open:pktlog_open,
 	release:pktlog_release,
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	mmap:pktlog_mmap,
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	read:pktlog_read,
 };
 
@@ -546,12 +554,19 @@ static void pktlog_detach(struct ol_softc *scn)
 	pl_info = pl_dev->pl_info;
 	remove_proc_entry(WLANDEV_BASENAME, g_pktlog_pde);
 	pktlog_sysctl_unregister(pl_dev);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	spin_lock_bh(&pl_info->log_lock);
 	if (pl_info->buf)
 		pktlog_release_buf(scn);
 	spin_unlock_bh(&pl_info->log_lock);
 	pktlog_cleanup(pl_info);
+=======
+	pktlog_cleanup(pl_info);
+
+	if (pl_info->buf)
+		pktlog_release_buf(scn);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (pl_dev) {
 		kfree(pl_info);
@@ -601,16 +616,23 @@ pktlog_read_proc_entry(char *buf, size_t nbytes, loff_t *ppos,
 	int rem_len;
 	int start_offset, end_offset;
 	int fold_offset, ppos_data, cur_rd_offset, cur_wr_offset;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct ath_pktlog_buf *log_buf;
 
 	spin_lock_bh(&pl_info->log_lock);
 	log_buf = pl_info->buf;
+=======
+	struct ath_pktlog_buf *log_buf = pl_info->buf;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	*read_complete = false;
 
 	if (log_buf == NULL) {
 		*read_complete = true;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_unlock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		return 0;
 	}
 
@@ -713,6 +735,10 @@ rd_done:
 	*ppos += ret_val;
 
 	if (ret_val == 0) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		PKTLOG_LOCK(pl_info);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		/* Write pointer might have been updated during the read.
 		 * So, if some data is written into, lets not reset the pointers.
 		 * We can continue to read from the offset position
@@ -726,8 +752,14 @@ rd_done:
 			pl_info->buf->offset = PKTLOG_READ_OFFSET;
 			*read_complete = true;
 		}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	}
 	spin_unlock_bh(&pl_info->log_lock);
+=======
+		PKTLOG_UNLOCK(pl_info);
+	}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return ret_val;
 }
 
@@ -747,6 +779,7 @@ pktlog_read(struct file *file, char *buf, size_t nbytes, loff_t *ppos)
 	struct ath_pktlog_info *pl_info = (struct ath_pktlog_info *)
 					  proc_entry->data;
 #endif
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct ath_pktlog_buf *log_buf;
 
 	spin_lock_bh(&pl_info->log_lock);
@@ -756,6 +789,12 @@ pktlog_read(struct file *file, char *buf, size_t nbytes, loff_t *ppos)
 		spin_unlock_bh(&pl_info->log_lock);
 		return 0;
 	}
+=======
+	struct ath_pktlog_buf *log_buf = pl_info->buf;
+
+	if (log_buf == NULL)
+		return 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (*ppos == 0 && pl_info->log_state) {
 		pl_info->saved_state = pl_info->log_state;
@@ -770,13 +809,19 @@ pktlog_read(struct file *file, char *buf, size_t nbytes, loff_t *ppos)
 
 	if (*ppos < bufhdr_size) {
 		count = MIN((bufhdr_size - *ppos), rem_len);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_unlock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (copy_to_user(buf, ((char *)&log_buf->bufhdr) + *ppos,
 				 count))
 			return -EFAULT;
 		rem_len -= count;
 		ret_val += count;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_lock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	start_offset = log_buf->rd_offset;
@@ -818,25 +863,37 @@ pktlog_read(struct file *file, char *buf, size_t nbytes, loff_t *ppos)
 			goto rd_done;
 
 		count = MIN(rem_len, (end_offset - ppos_data + 1));
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_unlock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (copy_to_user(buf + ret_val,
 				 log_buf->log_data + ppos_data,
 				 count))
 			return -EFAULT;
 		ret_val += count;
 		rem_len -= count;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_lock_bh(&pl_info->log_lock);
 	} else {
 		if (ppos_data <= fold_offset) {
 			count = MIN(rem_len, (fold_offset - ppos_data + 1));
 			spin_unlock_bh(&pl_info->log_lock);
+=======
+	} else {
+		if (ppos_data <= fold_offset) {
+			count = MIN(rem_len, (fold_offset - ppos_data + 1));
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			if (copy_to_user(buf + ret_val,
 					 log_buf->log_data + ppos_data,
 					 count))
 				return -EFAULT;
 			ret_val += count;
 			rem_len -= count;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			spin_lock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 
 		if (rem_len == 0)
@@ -848,14 +905,20 @@ pktlog_read(struct file *file, char *buf, size_t nbytes, loff_t *ppos)
 
 		if (ppos_data <= end_offset) {
 			count = MIN(rem_len, (end_offset - ppos_data + 1));
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			spin_unlock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			if (copy_to_user(buf + ret_val,
 					 log_buf->log_data + ppos_data,
 					 count))
 				return -EFAULT;
 			ret_val += count;
 			rem_len -= count;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			spin_lock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 	}
 
@@ -866,7 +929,10 @@ rd_done:
 	}
 	*ppos += ret_val;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_unlock_bh(&pl_info->log_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return ret_val;
 }
 
@@ -919,6 +985,109 @@ static volatile void *pktlog_virt_to_logical(volatile void *addr)
 }
 #endif
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+/* vma operations for mapping vmalloced area to user space */
+static void pktlog_vopen(struct vm_area_struct *vma)
+{
+	PKTLOG_MOD_INC_USE_COUNT;
+}
+
+static void pktlog_vclose(struct vm_area_struct *vma)
+{
+	PKTLOG_MOD_DEC_USE_COUNT;
+}
+
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,25)
+int pktlog_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
+{
+	unsigned long address = (unsigned long)vmf->virtual_address;
+
+	if (address == 0UL)
+		return VM_FAULT_NOPAGE;
+
+	if (vmf->pgoff > vma->vm_end)
+		return VM_FAULT_SIGBUS;
+
+	get_page(virt_to_page((void *)address));
+	vmf->page = virt_to_page((void *)address);
+	return VM_FAULT_MINOR;
+}
+#else
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)
+struct page *pktlog_vmmap(struct vm_area_struct *vma, unsigned long addr,
+			  int *type)
+#else
+struct page *pktlog_vmmap(struct vm_area_struct *vma, unsigned long addr,
+			  int write_access)
+#endif
+{
+	unsigned long offset, vaddr;
+	struct proc_dir_entry *proc_entry;
+	struct ath_pktlog_info *pl_info =
+
+	proc_entry = PDE(vma->vm_file->f_dentry->d_inode);
+	pl_info = (struct ath_pktlog_info *)proc_entry->data;
+
+	offset = addr - vma->vm_start + (vma->vm_pgoff << PAGE_SHIFT);
+	vaddr = (unsigned long) pktlog_virt_to_logical(
+					(void *)(pl_info->buf) + offset);
+
+	if (vaddr == 0UL) {
+		printk(PKTLOG_TAG "%s: page fault out of range\n", __func__);
+		return ((struct page *) 0UL);
+	}
+
+	/* increment the usage count of the page */
+	get_page(virt_to_page((void*)vaddr));
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)
+	if (type)
+		*type = VM_FAULT_MINOR;
+#endif
+
+	return virt_to_page((void *)vaddr);
+}
+#endif /* LINUX_VERSION_CODE > KERNEL_VERSION(2,6,25) */
+
+static struct vm_operations_struct pktlog_vmops = {
+	open:pktlog_vopen,
+	close:pktlog_vclose,
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,25)
+	fault:pktlog_fault,
+#else
+	nopage:pktlog_vmmap,
+#endif
+};
+
+static int pktlog_mmap(struct file *file, struct vm_area_struct *vma)
+{
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+	struct ath_pktlog_info *pl_info = (struct ath_pktlog_info *)
+					  PDE_DATA(file->f_path.dentry->d_inode);
+#else
+	struct proc_dir_entry *proc_entry = PDE(file->f_dentry->d_inode);
+	struct ath_pktlog_info *pl_info = (struct ath_pktlog_info *)
+					  proc_entry->data;
+#endif
+
+	if (vma->vm_pgoff != 0) {
+		/* Entire buffer should be mapped */
+		return -EINVAL;
+	}
+
+	if (!pl_info->buf) {
+		printk(PKTLOG_TAG "%s: Log buffer unavailable\n", __func__);
+		return -ENOMEM;
+	}
+
+	vma->vm_flags |= VM_LOCKED;
+	vma->vm_ops = &pktlog_vmops;
+	pktlog_vopen(vma);
+	return 0;
+}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 int pktlogmod_init(void *context)
 {
 	int ret;

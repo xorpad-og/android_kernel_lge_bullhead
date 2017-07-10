@@ -734,7 +734,12 @@ struct mm_struct *mm_access(struct task_struct *task, unsigned int mode)
 
 	mm = get_task_mm(task);
 	if (mm && mm != current->mm &&
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			!ptrace_may_access(task, mode)) {
+=======
+			!ptrace_may_access(task, mode) &&
+			!capable(CAP_SYS_RESOURCE)) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		mmput(mm);
 		mm = ERR_PTR(-EACCES);
 	}

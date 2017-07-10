@@ -1289,10 +1289,13 @@ int ipa_get_rt_tbl(struct ipa_ioc_get_rt_tbl *lookup)
 	mutex_lock(&ipa_ctx->lock);
 	entry = __ipa_find_rt_tbl(lookup->ip, lookup->name);
 	if (entry && entry->cookie == IPA_COOKIE) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (entry->ref_cnt == ((u32)~0U)) {
 			IPAERR("fail: ref count crossed limit\n");
 			goto ret;
 		}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		entry->ref_cnt++;
 		lookup->hdl = entry->id;
 
@@ -1302,8 +1305,11 @@ int ipa_get_rt_tbl(struct ipa_ioc_get_rt_tbl *lookup)
 
 		result = 0;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 ret:
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	mutex_unlock(&ipa_ctx->lock);
 
 	return result;

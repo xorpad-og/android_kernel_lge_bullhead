@@ -734,12 +734,15 @@ ssize_t tcp_splice_read(struct socket *sock, loff_t *ppos,
 				ret = -EAGAIN;
 				break;
 			}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			/* if __tcp_splice_read() got nothing while we have
 			 * an skb in receive queue, we do not want to loop.
 			 * This might happen with URG data.
 			 */
 			if (!skb_queue_empty(&sk->sk_receive_queue))
 				break;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			sk_wait_data(sk, &timeo);
 			if (signal_pending(current)) {
 				ret = sock_intr_errno(timeo);

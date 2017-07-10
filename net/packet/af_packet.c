@@ -1318,6 +1318,7 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 		return -EINVAL;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_lock(&fanout_mutex);
 
 	err = -EINVAL;
@@ -1328,6 +1329,15 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 	if (po->fanout)
 		goto out;
 
+=======
+	if (!po->running)
+		return -EINVAL;
+
+	if (po->fanout)
+		return -EALREADY;
+
+	mutex_lock(&fanout_mutex);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	match = NULL;
 	list_for_each_entry(f, &fanout_list, list) {
 		if (f->id == id &&
@@ -1383,6 +1393,7 @@ static void fanout_release(struct sock *sk)
 	struct packet_sock *po = pkt_sk(sk);
 	struct packet_fanout *f;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_lock(&fanout_mutex);
 	f = po->fanout;
 	if (f) {
@@ -1393,6 +1404,19 @@ static void fanout_release(struct sock *sk)
 			dev_remove_pack(&f->prot_hook);
 			kfree(f);
 		}
+=======
+	f = po->fanout;
+	if (!f)
+		return;
+
+	mutex_lock(&fanout_mutex);
+	po->fanout = NULL;
+
+	if (atomic_dec_and_test(&f->sk_ref)) {
+		list_del(&f->list);
+		dev_remove_pack(&f->prot_hook);
+		kfree(f);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 	mutex_unlock(&fanout_mutex);
 }
@@ -3180,8 +3204,11 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
 			return -EBUSY;
 		if (copy_from_user(&val, optval, sizeof(val)))
 			return -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (val > INT_MAX)
 			return -EINVAL;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		po->tp_reserve = val;
 		return 0;
 	}
@@ -3667,8 +3694,13 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 		if (unlikely(req->tp_block_size & (PAGE_SIZE - 1)))
 			goto out;
 		if (po->tp_version >= TPACKET_V3 &&
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		    req->tp_block_size <=
 			  BLK_PLUS_PRIV((u64)req_u->req3.tp_sizeof_priv))
+=======
+		    (int)(req->tp_block_size -
+			  BLK_PLUS_PRIV(req_u->req3.tp_sizeof_priv)) <= 0)
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto out;
 		if (unlikely(req->tp_frame_size < po->tp_hdrlen +
 					po->tp_reserve))
@@ -3679,8 +3711,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 		rb->frames_per_block = req->tp_block_size/req->tp_frame_size;
 		if (unlikely(rb->frames_per_block <= 0))
 			goto out;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (unlikely(req->tp_block_size > UINT_MAX / req->tp_block_nr))
 			goto out;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (unlikely((rb->frames_per_block * req->tp_block_nr) !=
 					req->tp_frame_nr))
 			goto out;

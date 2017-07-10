@@ -1893,6 +1893,7 @@ static int msm_cpp_cfg_frame(struct cpp_device *cpp_dev,
 		return -EINVAL;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/* Stripe index starts at zero */
 	if ((!new_frame->num_strips) ||
 		(new_frame->first_stripe_index >= new_frame->num_strips) ||
@@ -1916,6 +1917,11 @@ static int msm_cpp_cfg_frame(struct cpp_device *cpp_dev,
 		(new_frame->num_strips >
 			(UINT_MAX - 1 - stripe_base) / stripe_size)) {
 		pr_err("Invalid frame message, num_strips %d is large\n",
+=======
+	if (stripe_base == UINT_MAX || new_frame->num_strips >
+		(UINT_MAX - 1 - stripe_base) / stripe_size) {
+		pr_err("Invalid frame message,num_strips %d is large\n",
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			new_frame->num_strips);
 		return -EINVAL;
 	}
@@ -2184,12 +2190,18 @@ static int msm_cpp_cfg(struct cpp_device *cpp_dev,
 	struct msm_camera_v4l2_ioctl_t *ioctl_ptr)
 {
 	struct msm_cpp_frame_info_t *frame = NULL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct msm_cpp_frame_info_t k_frame_info;
 	int32_t rc = 0;
 	if (copy_from_user(&k_frame_info,
 			(void __user *)ioctl_ptr->ioctl_ptr,
 			sizeof(k_frame_info)))
 		return -EFAULT;
+=======
+	struct msm_cpp_frame_info_t *u_frame_info =
+	  (struct msm_cpp_frame_info_t *)ioctl_ptr->ioctl_ptr;
+	int32_t rc = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	frame = msm_cpp_get_frame(ioctl_ptr);
 	if (!frame) {
@@ -2201,7 +2213,11 @@ static int msm_cpp_cfg(struct cpp_device *cpp_dev,
 
 	ioctl_ptr->trans_code = rc;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (copy_to_user((void __user *)k_frame_info.status, &rc,
+=======
+	if (copy_to_user((void __user *)u_frame_info->status, &rc,
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		sizeof(int32_t)))
 		pr_err("error cannot copy error\n");
 
@@ -2288,13 +2304,20 @@ static void msm_cpp_fw_version(struct cpp_device *cpp_dev)
 	msm_cpp_poll(cpp_dev->base, MSM_CPP_MSG_ID_TRAILER);
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static int msm_cpp_validate_ioctl_input(unsigned int cmd, void *arg,
+=======
+static int msm_cpp_validate_input(unsigned int cmd, void *arg,
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	struct msm_camera_v4l2_ioctl_t **ioctl_ptr)
 {
 	switch (cmd) {
 	case MSM_SD_SHUTDOWN:
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	case VIDIOC_MSM_CPP_IOMMU_ATTACH:
 	case VIDIOC_MSM_CPP_IOMMU_DETACH:
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	default: {
 		if (ioctl_ptr == NULL) {
@@ -2303,9 +2326,14 @@ static int msm_cpp_validate_ioctl_input(unsigned int cmd, void *arg,
 		}
 
 		*ioctl_ptr = arg;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (((*ioctl_ptr) == NULL) ||
 			((*ioctl_ptr)->ioctl_ptr == NULL) ||
 			((*ioctl_ptr)->len == 0)) {
+=======
+		if ((*ioctl_ptr == NULL) ||
+			(*ioctl_ptr)->ioctl_ptr == NULL) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			pr_err("Error invalid ioctl argument cmd %u", cmd);
 			return -EINVAL;
 		}
@@ -2337,7 +2365,11 @@ long msm_cpp_subdev_ioctl(struct v4l2_subdev *sd,
 		return -EINVAL;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rc = msm_cpp_validate_ioctl_input(cmd, arg, &ioctl_ptr);
+=======
+	rc = msm_cpp_validate_input(cmd, arg, &ioctl_ptr);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (rc != 0) {
 		pr_err("input validation failed\n");
 		return rc;
@@ -2801,7 +2833,10 @@ STREAM_BUFF_END:
 				pr_err("%s:%dError iommu_attach_device failed\n",
 					__func__, __LINE__);
 				rc = -EINVAL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				break;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			}
 			cpp_dev->iommu_state = CPP_IOMMU_STATE_ATTACHED;
 		} else {
@@ -2816,17 +2851,23 @@ STREAM_BUFF_END:
 			(cpp_dev->stream_cnt == 0)) {
 			iommu_detach_device(cpp_dev->domain,
 				cpp_dev->iommu_ctx);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			if (rc < 0) {
 				pr_err("%s:%dError iommu detach failed\n",
 					__func__, __LINE__);
 				rc = -EINVAL;
 				break;
 			}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			cpp_dev->iommu_state = CPP_IOMMU_STATE_DETACHED;
 		} else {
 			pr_err("%s:%d IOMMMU attach triggered in invalid state\n",
 				__func__, __LINE__);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			rc = -EINVAL;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 		break;
 	}
@@ -3432,7 +3473,11 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	default:
 		pr_err_ratelimited("%s: unsupported compat type :%x LOAD %lu\n",
 				__func__, cmd, VIDIOC_MSM_CPP_LOAD_FIRMWARE);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		return -EINVAL;
+=======
+		break;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	switch (cmd) {
@@ -3458,7 +3503,11 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	default:
 		pr_err_ratelimited("%s: unsupported compat type :%d\n",
 				__func__, cmd);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		return -EINVAL;
+=======
+		break;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	up32_ioctl.id = kp_ioctl.id;

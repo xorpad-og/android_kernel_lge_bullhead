@@ -1,7 +1,11 @@
 /*
  * QTI CE 32-bit compatibility syscall for 64-bit systems
  *
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
  * Copyright (c) 2014-2015, 2017, The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2014, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -97,6 +101,10 @@ static int compat_get_qcedev_vbuf_info(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, &vbuf32->src[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		vbuf->src[i].vaddr = NULL;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, (compat_uptr_t *)&vbuf->src[i].vaddr);
 		err |= get_user(len, &vbuf32->src[i].len);
 		err |= put_user(len, &vbuf->src[i].len);
@@ -104,6 +112,10 @@ static int compat_get_qcedev_vbuf_info(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, &vbuf32->dst[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		vbuf->dst[i].vaddr = NULL;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, (compat_uptr_t *)&vbuf->dst[i].vaddr);
 		err |= get_user(len, &vbuf32->dst[i].len);
 		err |= put_user(len, &vbuf->dst[i].len);
@@ -121,6 +133,10 @@ static int compat_put_qcedev_vbuf_info(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, (compat_uptr_t *)&vbuf->src[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		vbuf32->src[i].vaddr = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, &vbuf32->src[i].vaddr);
 		err |= get_user(len, &vbuf->src[i].len);
 		err |= put_user(len, &vbuf32->src[i].len);
@@ -128,6 +144,10 @@ static int compat_put_qcedev_vbuf_info(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, (compat_uptr_t *)&vbuf->dst[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		vbuf32->dst[i].vaddr = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, &vbuf32->dst[i].vaddr);
 		err |= get_user(len, &vbuf->dst[i].len);
 		err |= put_user(len, &vbuf32->dst[i].len);
@@ -272,6 +292,10 @@ static int compat_get_qcedev_sha_op_req(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, &data32->data[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		data->data[i].vaddr = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, (compat_uptr_t *)&data->data[i].vaddr);
 		err |= get_user(len, &data32->data[i].len);
 		err |= put_user(len, &data->data[i].len);
@@ -290,6 +314,10 @@ static int compat_get_qcedev_sha_op_req(
 	err |= get_user(diglen, &data32->diglen);
 	err |= put_user(diglen, &data->diglen);
 	err |= get_user(authkey, &data32->authkey);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	data->authkey = NULL;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	err |= put_user(authkey, (compat_uptr_t *)&data->authkey);
 	err |= get_user(authklen, &data32->authklen);
 	err |= put_user(authklen, &data->authklen);
@@ -316,6 +344,10 @@ static int compat_put_qcedev_sha_op_req(
 
 	for (i = 0; i < QCEDEV_MAX_BUFFERS; i++) {
 		err |= get_user(vaddr, (compat_uptr_t *)&data->data[i].vaddr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+		data32->data[i].vaddr = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		err |= put_user(vaddr, &data32->data[i].vaddr);
 		err |= get_user(len, &data->data[i].len);
 		err |= put_user(len, &data32->data[i].len);
@@ -334,6 +366,10 @@ static int compat_put_qcedev_sha_op_req(
 	err |= get_user(diglen, &data->diglen);
 	err |= put_user(diglen, &data32->diglen);
 	err |= get_user(authkey, (compat_uptr_t *)&data->authkey);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	data32->authkey = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	err |= put_user(authkey, &data32->authkey);
 	err |= get_user(authklen, &data->authklen);
 	err |= put_user(authklen, &data32->authklen);

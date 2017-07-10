@@ -486,7 +486,11 @@ sg_read(struct file *filp, char __user *buf, size_t count, loff_t * ppos)
 		old_hdr->result = EIO;
 		break;
 	case DID_ERROR:
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		old_hdr->result = (srp->sense_b[0] == 0 &&
+=======
+		old_hdr->result = (srp->sense_b[0] == 0 && 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				  hp->masked_status == GOOD) ? 0 : EIO;
 		break;
 	default:
@@ -832,10 +836,15 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 			return -ENXIO;
 		if (!access_ok(VERIFY_WRITE, p, SZ_SG_IO_HDR))
 			return -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&sfp->parentdp->open_rel_lock);
 		result = sg_new_write(sfp, filp, p, SZ_SG_IO_HDR,
 				 1, read_only, 1, &srp);
 		mutex_unlock(&sfp->parentdp->open_rel_lock);
+=======
+		result = sg_new_write(sfp, filp, p, SZ_SG_IO_HDR,
+				 1, read_only, 1, &srp);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (result < 0)
 			return result;
 		result = wait_event_interruptible(sfp->read_wait,
@@ -875,10 +884,15 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 			sfp->low_dma = 1;
 			if ((0 == sfp->low_dma) && (0 == sg_res_in_use(sfp))) {
 				val = (int) sfp->reserve.bufflen;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				mutex_lock(&sfp->parentdp->open_rel_lock);
 				sg_remove_scat(&sfp->reserve);
 				sg_build_reserve(sfp, val);
 				mutex_unlock(&sfp->parentdp->open_rel_lock);
+=======
+				sg_remove_scat(&sfp->reserve);
+				sg_build_reserve(sfp, val);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			}
 		} else {
 			if (sdp->detached)
@@ -946,17 +960,27 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 		result = get_user(val, ip);
 		if (result)
 			return result;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (val < 0)
 			return -EINVAL;
+=======
+                if (val < 0)
+                        return -EINVAL;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		val = min_t(int, val,
 			    queue_max_sectors(sdp->device->request_queue) * 512);
 		if (val != sfp->reserve.bufflen) {
 			if (sg_res_in_use(sfp) || sfp->mmap_called)
 				return -EBUSY;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_lock(&sfp->parentdp->open_rel_lock);
 			sg_remove_scat(&sfp->reserve);
 			sg_build_reserve(sfp, val);
 			mutex_unlock(&sfp->parentdp->open_rel_lock);
+=======
+			sg_remove_scat(&sfp->reserve);
+			sg_build_reserve(sfp, val);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 		return 0;
 	case SG_GET_RESERVED_SIZE:
@@ -1009,8 +1033,13 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 				if (srp) {
 					rinfo[val].req_state = srp->done + 1;
 					rinfo[val].problem =
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 					    srp->header.masked_status &
 					    srp->header.host_status &
+=======
+					    srp->header.masked_status & 
+					    srp->header.host_status & 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 					    srp->header.driver_status;
 					if (srp->done)
 						rinfo[val].duration =
@@ -1031,7 +1060,11 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 				}
 			}
 			read_unlock_irqrestore(&sfp->rq_list_lock, iflags);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			result = __copy_to_user(p, rinfo,
+=======
+			result = __copy_to_user(p, rinfo, 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 						SZ_SG_REQ_INFO * SG_MAX_QUEUE);
 			result = result ? -EFAULT : 0;
 			kfree(rinfo);
@@ -1133,14 +1166,22 @@ static long sg_compat_ioctl(struct file *filp, unsigned int cmd_in, unsigned lon
 		return -ENXIO;
 
 	sdev = sdp->device;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (sdev->host->hostt->compat_ioctl) {
+=======
+	if (sdev->host->hostt->compat_ioctl) { 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		int ret;
 
 		ret = sdev->host->hostt->compat_ioctl(sdev, cmd_in, (void __user *)arg);
 
 		return ret;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
+=======
+	
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return -ENOIOCTLCMD;
 }
 #endif
@@ -1600,7 +1641,11 @@ init_sg(void)
 	else
 		def_reserved_size = sg_big_buff;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rc = register_chrdev_region(MKDEV(SCSI_GENERIC_MAJOR, 0),
+=======
+	rc = register_chrdev_region(MKDEV(SCSI_GENERIC_MAJOR, 0), 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				    SG_MAX_DEVS, "sg");
 	if (rc)
 		return rc;
@@ -1700,9 +1745,12 @@ static int sg_start_req(Sg_request *srp, unsigned char *cmd)
 			md->from_user = 0;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (unlikely(iov_count > UIO_MAXIOV))
 		return -EINVAL;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (iov_count) {
 		int len, size = sizeof(struct sg_iovec) * iov_count;
 		struct iovec *iov;
@@ -2240,7 +2288,11 @@ static const struct file_operations adio_fops = {
 };
 
 static int sg_proc_single_open_dressz(struct inode *inode, struct file *file);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static ssize_t sg_proc_write_dressz(struct file *filp,
+=======
+static ssize_t sg_proc_write_dressz(struct file *filp, 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		const char __user *buffer, size_t count, loff_t *off);
 static const struct file_operations dressz_fops = {
 	.owner = THIS_MODULE,
@@ -2380,7 +2432,11 @@ static int sg_proc_single_open_adio(struct inode *inode, struct file *file)
 	return single_open(file, sg_proc_seq_show_int, &sg_allow_dio);
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static ssize_t
+=======
+static ssize_t 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 sg_proc_write_adio(struct file *filp, const char __user *buffer,
 		   size_t count, loff_t *off)
 {
@@ -2401,7 +2457,11 @@ static int sg_proc_single_open_dressz(struct inode *inode, struct file *file)
 	return single_open(file, sg_proc_seq_show_int, &sg_big_buff);
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static ssize_t
+=======
+static ssize_t 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 sg_proc_write_dressz(struct file *filp, const char __user *buffer,
 		     size_t count, loff_t *off)
 {
@@ -2558,7 +2618,11 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
 			hp = &srp->header;
 			new_interface = (hp->interface_id == '\0') ? 0 : 1;
 			if (srp->res_used) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				if (new_interface &&
+=======
+				if (new_interface && 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				    (SG_FLAG_MMAP_IO & hp->flags))
 					cp = "     mmap>> ";
 				else
@@ -2572,7 +2636,11 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
 			seq_printf(s, cp);
 			blen = srp->data.bufflen;
 			usg = srp->data.k_use_sg;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			seq_printf(s, srp->done ?
+=======
+			seq_printf(s, srp->done ? 
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				   ((1 == srp->done) ?  "rcv:" : "fin:")
 				   : "act:");
 			seq_printf(s, " id=%d blen=%d",

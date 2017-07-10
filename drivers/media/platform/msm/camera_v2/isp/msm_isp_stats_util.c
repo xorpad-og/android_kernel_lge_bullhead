@@ -550,12 +550,15 @@ static int msm_isp_stats_update_cgc_override(struct vfe_device *vfe_dev,
 	int i;
 	uint32_t stats_mask = 0, idx;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (stream_cfg_cmd->num_streams > MSM_ISP_STATS_MAX) {
 		pr_err("%s invalid num_streams %d\n", __func__,
 			stream_cfg_cmd->num_streams);
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	for (i = 0; i < stream_cfg_cmd->num_streams; i++) {
 		idx = STATS_IDX(stream_cfg_cmd->stream_handle[i]);
 
@@ -636,6 +639,7 @@ static int msm_isp_start_stats_stream(struct vfe_device *vfe_dev,
 		stats_data->stream_info);
 	if (rc < 0)
 		return rc;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	if (stream_cfg_cmd->num_streams > MSM_ISP_STATS_MAX) {
 		pr_err("%s invalid num_streams %d\n", __func__,
@@ -643,6 +647,8 @@ static int msm_isp_start_stats_stream(struct vfe_device *vfe_dev,
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	for (i = 0; i < stream_cfg_cmd->num_streams; i++) {
 		idx = STATS_IDX(stream_cfg_cmd->stream_handle[i]);
 
@@ -715,12 +721,15 @@ static int msm_isp_stop_stats_stream(struct vfe_device *vfe_dev,
 	num_stats_comp_mask =
 		vfe_dev->hw_info->stats_hw_info->num_stats_comp_mask;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (stream_cfg_cmd->num_streams > MSM_ISP_STATS_MAX) {
 		pr_err("%s invalid num_streams %d\n", __func__,
 			stream_cfg_cmd->num_streams);
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	for (i = 0; i < stream_cfg_cmd->num_streams; i++) {
 
 		idx = STATS_IDX(stream_cfg_cmd->stream_handle[i]);
@@ -817,18 +826,25 @@ int msm_isp_update_stats_stream(struct vfe_device *vfe_dev, void *arg)
 	struct msm_vfe_axi_stream_cfg_update_info *update_info = NULL;
 	struct msm_isp_sw_framskip *sw_skip_info = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (update_cmd->num_streams > MSM_ISP_STATS_MAX) {
 		pr_err("%s: Invalid num_streams %d\n",
 			__func__, update_cmd->num_streams);
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	/*validate request*/
 	for (i = 0; i < update_cmd->num_streams; i++) {
 		update_info = &update_cmd->update_info[i];
 		/*check array reference bounds*/
 		if (STATS_IDX(update_info->stream_handle)
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			>= vfe_dev->hw_info->stats_hw_info->num_stats_type) {
+=======
+			> vfe_dev->hw_info->stats_hw_info->num_stats_type) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			pr_err("%s: stats idx %d out of bound!", __func__,
 				STATS_IDX(update_info->stream_handle));
 			return -EINVAL;

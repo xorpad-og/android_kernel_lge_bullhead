@@ -2055,10 +2055,13 @@ static int _sha_complete(struct qce_device *pce_dev)
 	uint32_t status;
 
 	areq = (struct ahash_request *) pce_dev->areq;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!areq) {
 		pr_err("sha operation error. areq is NULL\n");
 		return -ENXIO;
 	}
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	qce_dma_unmap_sg(pce_dev->pdev, areq->src, pce_dev->src_nents,
 				DMA_TO_DEVICE);
 	memcpy(digest, (char *)(&pce_dev->ce_sps.result->auth_iv[0]),

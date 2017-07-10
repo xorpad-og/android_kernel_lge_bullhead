@@ -201,8 +201,12 @@ udf_get_lb_pblock(struct super_block *sb, struct kernel_lb_addr *loc,
 }
 
 /* unicode.c */
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 extern int udf_get_filename(struct super_block *, uint8_t *, int, uint8_t *,
 			    int);
+=======
+extern int udf_get_filename(struct super_block *, uint8_t *, uint8_t *, int);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 extern int udf_put_filename(struct super_block *, const uint8_t *, uint8_t *,
 			    int);
 extern int udf_build_ustr(struct ustr *, dstring *, int);

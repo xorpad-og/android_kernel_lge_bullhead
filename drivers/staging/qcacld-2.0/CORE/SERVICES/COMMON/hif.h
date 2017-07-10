@@ -880,6 +880,7 @@ static inline void hif_request_runtime_pm_resume(void *ol_sc)
 
 A_BOOL HIFIsMailBoxSwapped(HIF_DEVICE *hd);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 #ifdef HIF_PCI
 int hif_addr_in_boundary(HIF_DEVICE *hif_device, A_UINT32 offset);
 #else
@@ -888,4 +889,6 @@ static inline int hif_addr_in_boundary(HIF_DEVICE *hif_device, A_UINT32 offset)
 	return 0;
 }
 #endif
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 #endif /* _HIF_H_ */

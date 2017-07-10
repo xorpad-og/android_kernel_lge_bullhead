@@ -1589,7 +1589,10 @@ again:
 
     OS_MEMZERO(sc, sizeof(*sc));
     sc->mem = mem;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
     sc->mem_len = pci_resource_len(pdev, BAR_NUM);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
     sc->pdev = pdev;
     sc->dev = &pdev->dev;
 

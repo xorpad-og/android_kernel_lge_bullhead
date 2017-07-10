@@ -676,6 +676,7 @@ static int msm_fd_s_fmt_vid_out(struct file *file,
 static int msm_fd_reqbufs(struct file *file,
 	void *fh, struct v4l2_requestbuffers *req)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	int ret;
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
@@ -683,6 +684,11 @@ static int msm_fd_reqbufs(struct file *file,
 	ret = vb2_reqbufs(&ctx->vb2_q, req);
 	mutex_unlock(&ctx->fd_device->recovery_lock);
 	return ret;
+=======
+	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
+
+	return vb2_reqbufs(&ctx->vb2_q, req);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 /*
@@ -694,6 +700,7 @@ static int msm_fd_reqbufs(struct file *file,
 static int msm_fd_qbuf(struct file *file, void *fh,
 	struct v4l2_buffer *pb)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	int ret;
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
@@ -702,6 +709,11 @@ static int msm_fd_qbuf(struct file *file, void *fh,
 	mutex_unlock(&ctx->fd_device->recovery_lock);
 	return ret;
 
+=======
+	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
+
+	return vb2_qbuf(&ctx->vb2_q, pb);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 /*
@@ -713,6 +725,7 @@ static int msm_fd_qbuf(struct file *file, void *fh,
 static int msm_fd_dqbuf(struct file *file,
 	void *fh, struct v4l2_buffer *pb)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	int ret;
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
@@ -720,6 +733,11 @@ static int msm_fd_dqbuf(struct file *file,
 	ret = vb2_dqbuf(&ctx->vb2_q, pb, file->f_flags & O_NONBLOCK);
 	mutex_unlock(&ctx->fd_device->recovery_lock);
 	return ret;
+=======
+	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
+
+	return vb2_dqbuf(&ctx->vb2_q, pb, file->f_flags & O_NONBLOCK);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 /*
@@ -1225,7 +1243,10 @@ static int fd_probe(struct platform_device *pdev)
 
 	mutex_init(&fd->lock);
 	spin_lock_init(&fd->slock);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	mutex_init(&fd->recovery_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	init_completion(&fd->hw_halt_completion);
 	INIT_LIST_HEAD(&fd->buf_queue);
 	fd->dev = &pdev->dev;

@@ -1,5 +1,9 @@
 /*
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
  * Copyright (c) 2016-2017 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2016 The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -38,8 +42,13 @@ static const struct nla_policy
 qca_wlan_vendor_ndp_policy[QCA_WLAN_VENDOR_ATTR_NDP_PARAMS_MAX + 1] = {
 	[QCA_WLAN_VENDOR_ATTR_NDP_SUBCMD] = { .type = NLA_U32 },
 	[QCA_WLAN_VENDOR_ATTR_NDP_TRANSACTION_ID] = { .type = NLA_U16 },
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	[QCA_WLAN_VENDOR_ATTR_NDP_IFACE_STR] = { .type = NLA_NUL_STRING,
 					.len = IFNAMSIZ - 1 },
+=======
+	[QCA_WLAN_VENDOR_ATTR_NDP_IFACE_STR] = { .type = NLA_STRING,
+					.len = IFNAMSIZ },
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	[QCA_WLAN_VENDOR_ATTR_NDP_SERVICE_INSTANCE_ID] = { .type = NLA_U32 },
 	[QCA_WLAN_VENDOR_ATTR_NDP_CHANNEL_SPEC_CHANNEL] = { .type = NLA_U32 },
 	[QCA_WLAN_VENDOR_ATTR_NDP_PEER_DISCOVERY_MAC_ADDR] = {

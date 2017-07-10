@@ -8,9 +8,13 @@ enum pid_type
 	PIDTYPE_PID,
 	PIDTYPE_PGID,
 	PIDTYPE_SID,
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	PIDTYPE_MAX,
 	/* only valid to __task_pid_nr_ns() */
 	__PIDTYPE_TGID
+=======
+	PIDTYPE_MAX
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 };
 
 /*

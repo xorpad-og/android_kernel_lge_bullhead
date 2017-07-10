@@ -1,4 +1,8 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2008-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2008-2016, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -209,11 +213,16 @@ kgsl_mem_entry_create(void)
 {
 	struct kgsl_mem_entry *entry = kzalloc(sizeof(*entry), GFP_KERNEL);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (entry) {
 		kref_init(&entry->refcount);
 		/* put this ref in the caller functions after init */
 		kref_get(&entry->refcount);
 	}
+=======
+	if (entry)
+		kref_init(&entry->refcount);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	return entry;
 }
@@ -1609,7 +1618,10 @@ static void _kgsl_cmdbatch_timer(unsigned long data)
 	struct kgsl_device *device;
 	struct kgsl_cmdbatch *cmdbatch = (struct kgsl_cmdbatch *) data;
 	struct kgsl_cmdbatch_sync_event *event;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned long flags;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (cmdbatch == NULL || cmdbatch->context == NULL)
 		return;
@@ -1624,14 +1636,22 @@ static void _kgsl_cmdbatch_timer(unsigned long data)
 	kgsl_context_dump(cmdbatch->context);
 	clear_bit(CMDBATCH_FLAG_FENCE_LOG, &cmdbatch->priv);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_lock_irqsave(&cmdbatch->lock, flags);
+=======
+	spin_lock(&cmdbatch->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	/* Print all the fences */
 	list_for_each_entry(event, &cmdbatch->synclist, node) {
 		if (KGSL_CMD_SYNCPOINT_TYPE_FENCE == event->type &&
 			event->handle && event->handle->fence)
 			kgsl_sync_fence_log(event->handle->fence);
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_unlock_irqrestore(&cmdbatch->lock, flags);
+=======
+	spin_unlock(&cmdbatch->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	dev_err(device->dev, "--gpu syncpoint deadlock print end--\n");
 }
 /**
@@ -1686,16 +1706,27 @@ static void kgsl_cmdbatch_sync_expire(struct kgsl_device *device,
 	struct kgsl_cmdbatch_sync_event *event)
 {
 	struct kgsl_cmdbatch_sync_event *e, *tmp;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned long flags;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	int sched = 0;
 	int removed = 0;
 
 	/*
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	 * cmdbatch timer or event callback might run at
 	 * this time in interrupt context and uses same lock.
 	 * So use irq-save version of spin lock.
 	 */
 	spin_lock_irqsave(&event->cmdbatch->lock, flags);
+=======
+	 * We may have cmdbatch timer running, which also uses same lock,
+	 * take a lock with software interrupt disabled (bh) to avoid
+	 * spin lock recursion.
+	 */
+	spin_lock_bh(&event->cmdbatch->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/*
 	 * sync events that are contained by a cmdbatch which has been
@@ -1710,9 +1741,14 @@ static void kgsl_cmdbatch_sync_expire(struct kgsl_device *device,
 		}
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	event->handle = NULL;
 	sched = list_empty(&event->cmdbatch->synclist) ? 1 : 0;
 	spin_unlock_irqrestore(&event->cmdbatch->lock, flags);
+=======
+	sched = list_empty(&event->cmdbatch->synclist) ? 1 : 0;
+	spin_unlock_bh(&event->cmdbatch->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/* If the list is empty delete the canary timer */
 	if (sched)
@@ -1774,11 +1810,15 @@ void kgsl_cmdbatch_destroy(struct kgsl_cmdbatch *cmdbatch)
 	struct kgsl_cmdbatch_sync_event *event, *tmpsync;
 	LIST_HEAD(cancel_synclist);
 	int sched = 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned long flags;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/* Zap the canary timer */
 	del_timer_sync(&cmdbatch->timer);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/*
 	 * callback might run in interrupt context
 	 * so need to use irqsave version of spinlocks.
@@ -1788,6 +1828,14 @@ void kgsl_cmdbatch_destroy(struct kgsl_cmdbatch *cmdbatch)
 	/* Empty the synclist before canceling events */
 	list_splice_init(&cmdbatch->synclist, &cancel_synclist);
 	spin_unlock_irqrestore(&cmdbatch->lock, flags);
+=======
+	/* non-bh because we just destroyed timer */
+	spin_lock(&cmdbatch->lock);
+
+	/* Empty the synclist before canceling events */
+	list_splice_init(&cmdbatch->synclist, &cancel_synclist);
+	spin_unlock(&cmdbatch->lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/*
 	 * Finish canceling events outside the cmdbatch spinlock and
@@ -1809,6 +1857,7 @@ void kgsl_cmdbatch_destroy(struct kgsl_cmdbatch *cmdbatch)
 				kgsl_cmdbatch_sync_func, event);
 		} else if (event->type == KGSL_CMD_SYNCPOINT_TYPE_FENCE) {
 			/* Put events that are successfully canceled */
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			spin_lock_irqsave(&cmdbatch->lock, flags);
 
 			if (kgsl_sync_fence_async_cancel(event->handle)) {
@@ -1818,6 +1867,10 @@ void kgsl_cmdbatch_destroy(struct kgsl_cmdbatch *cmdbatch)
 			} else {
 				spin_unlock_irqrestore(&cmdbatch->lock, flags);
 			}
+=======
+			if (kgsl_sync_fence_async_cancel(event->handle))
+				kgsl_cmdbatch_sync_event_put(event);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 
 		/* Put events that have been removed from the synclist */
@@ -1878,7 +1931,10 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 {
 	struct kgsl_cmd_syncpoint_fence *sync = priv;
 	struct kgsl_cmdbatch_sync_event *event;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned long flags;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	event = kzalloc(sizeof(*event), GFP_KERNEL);
 
@@ -1907,6 +1963,14 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 
 	kref_get(&event->refcount);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	/* non-bh because, we haven't started cmdbatch timer yet */
+	spin_lock(&cmdbatch->lock);
+	list_add(&event->node, &cmdbatch->synclist);
+	spin_unlock(&cmdbatch->lock);
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	/*
 	 * Increment the reference count for the async callback.
 	 * Decrement when the callback is successfully canceled, when
@@ -1914,10 +1978,13 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 	 */
 
 	kref_get(&event->refcount);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	spin_lock_irqsave(&cmdbatch->lock, flags);
 	list_add(&event->node, &cmdbatch->synclist);
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	event->handle = kgsl_sync_fence_async_wait(sync->fd,
 		kgsl_cmdbatch_sync_fence_func, event);
 
@@ -1925,6 +1992,7 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 		int ret = PTR_ERR(event->handle);
 
 		event->handle = NULL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		/* Remove event from the synclist */
 		list_del(&event->node);
 		spin_unlock_irqrestore(&cmdbatch->lock, flags);
@@ -1933,6 +2001,19 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 		/* Unable to add event to the async callback so a put */
 		kgsl_cmdbatch_sync_event_put(event);
 		/* Put since event no longer needed by this function */
+=======
+
+		/* Failed to add the event to the async callback */
+		kgsl_cmdbatch_sync_event_put(event);
+
+		/* Remove event from the synclist */
+		spin_lock(&cmdbatch->lock);
+		list_del(&event->node);
+		spin_unlock(&cmdbatch->lock);
+		kgsl_cmdbatch_sync_event_put(event);
+
+		/* Event no longer needed by this function */
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		kgsl_cmdbatch_sync_event_put(event);
 
 		/*
@@ -1946,7 +2027,10 @@ static int kgsl_cmdbatch_add_sync_fence(struct kgsl_device *device,
 	}
 
 	trace_syncpoint_fence(cmdbatch, event->handle->name);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_unlock_irqrestore(&cmdbatch->lock, flags);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/*
 	 * Event was successfully added to the synclist, the async
@@ -2598,9 +2682,15 @@ long kgsl_ioctl_drawctxt_create(struct kgsl_device_private *dev_priv,
 	/* Commit the pointer to the context in context_idr */
 	write_lock(&device->context_lock);
 	idr_replace(&device->context_idr, context, context->id);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	param->drawctxt_id = context->id;
 	write_unlock(&device->context_lock);
 
+=======
+	write_unlock(&device->context_lock);
+
+	param->drawctxt_id = context->id;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 done:
 	mutex_unlock(&device->mutex);
 	return result;
@@ -3284,9 +3374,12 @@ long kgsl_ioctl_map_user_mem(struct kgsl_device_private *dev_priv,
 	trace_kgsl_mem_map(entry, param->fd);
 
 	kgsl_mem_entry_commit_process(private, entry);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	/* put the extra refcount for kgsl_mem_entry_create() */
 	kgsl_mem_entry_put(entry);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return result;
 
 error_attach:
@@ -3643,9 +3736,12 @@ long kgsl_ioctl_gpumem_alloc(struct kgsl_device_private *dev_priv,
 	param->flags = entry->memdesc.flags;
 
 	kgsl_mem_entry_commit_process(private, entry);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	/* put the extra refcount for kgsl_mem_entry_create() */
 	kgsl_mem_entry_put(entry);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return result;
 err:
 	kgsl_sharedmem_free(&entry->memdesc);
@@ -3693,9 +3789,12 @@ long kgsl_ioctl_gpumem_alloc_id(struct kgsl_device_private *dev_priv,
 	param->gpuaddr = entry->memdesc.gpuaddr;
 
 	kgsl_mem_entry_commit_process(private, entry);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	/* put the extra refcount for kgsl_mem_entry_create() */
 	kgsl_mem_entry_put(entry);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return result;
 err:
 	if (entry)

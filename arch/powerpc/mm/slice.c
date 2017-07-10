@@ -103,7 +103,11 @@ static int slice_area_is_free(struct mm_struct *mm, unsigned long addr,
 	if ((mm->task_size - len) < addr)
 		return 0;
 	vma = find_vma(mm, addr);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	return (!vma || (addr + len) <= vm_start_gap(vma));
+=======
+	return (!vma || (addr + len) <= vma->vm_start);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static int slice_low_has_vma(struct mm_struct *mm, unsigned long slice)

@@ -148,8 +148,11 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 	case AUDIO_START: {
 		pr_debug("%s: AUDIO_START\n", __func__);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		rc = q6asm_open_read_write_v2(effects->ac,
 					FORMAT_LINEAR_PCM,
 					FORMAT_MULTI_CHANNEL_LINEAR_PCM,
@@ -161,7 +164,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 			pr_err("%s: Open failed for hw accelerated effects:rc=%d\n",
 				__func__, rc);
 			rc = -EINVAL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto ioctl_fail;
 		}
 		effects->opened = 1;
@@ -178,7 +184,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 			pr_err("%s: Write buffer Allocation failed rc = %d\n",
 				__func__, rc);
 			rc = -ENOMEM;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto ioctl_fail;
 		}
 		atomic_set(&effects->in_count, effects->config.input.num_buf);
@@ -189,7 +198,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 			pr_err("%s: Read buffer Allocation failed rc = %d\n",
 				__func__, rc);
 			rc = -ENOMEM;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto readbuf_fail;
 		}
 		atomic_set(&effects->out_count, effects->config.output.num_buf);
@@ -204,7 +216,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 		if (rc < 0) {
 			pr_err("%s: pcm read block config failed\n", __func__);
 			rc = -EINVAL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto cfg_fail;
 		}
 		pr_debug("%s: dec: sample_rate: %d, num_channels: %d, bit_width: %d\n",
@@ -219,7 +234,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 			pr_err("%s: pcm write format block config failed\n",
 				__func__);
 			rc = -EINVAL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto cfg_fail;
 		}
 
@@ -232,7 +250,10 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 			effects->started = 0;
 			pr_err("%s: ASM run state failed\n", __func__);
 		}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_EFFECTS_WRITE: {
@@ -294,11 +315,16 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 		uint32_t idx = 0;
 		uint32_t size = 0;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
 
 		if (!effects->started) {
 			rc = -EFAULT;
 			mutex_unlock(&effects->lock);
+=======
+		if (!effects->started) {
+			rc = -EFAULT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto ioctl_fail;
 		}
 
@@ -315,13 +341,19 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 		if (!rc) {
 			pr_err("%s: read wait_event_timeout\n", __func__);
 			rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto ioctl_fail;
 		}
 		if (!atomic_read(&effects->in_count)) {
 			pr_err("%s: pcm stopped in_count 0\n", __func__);
 			rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto ioctl_fail;
 		}
 
@@ -329,18 +361,27 @@ static int audio_effects_shared_ioctl(struct file *file, unsigned cmd,
 		if (bufptr) {
 			if (!((void *)arg)) {
 				rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				goto ioctl_fail;
 			}
 			if ((effects->config.buf_cfg.input_len > size) ||
 				copy_to_user((void *)arg, bufptr,
 					effects->config.buf_cfg.input_len)) {
 				rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				mutex_unlock(&effects->lock);
 				goto ioctl_fail;
 			}
 		}
 		mutex_unlock(&effects->lock);
+=======
+				goto ioctl_fail;
+			}
+		}
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	default:
@@ -463,7 +504,10 @@ static long audio_effects_ioctl(struct file *file, unsigned int cmd,
 	switch (cmd) {
 	case AUDIO_SET_EFFECTS_CONFIG: {
 		pr_debug("%s: AUDIO_SET_EFFECTS_CONFIG\n", __func__);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		memset(&effects->config, 0, sizeof(effects->config));
 		if (copy_from_user(&effects->config, (void *)arg,
 				   sizeof(effects->config))) {
@@ -481,7 +525,10 @@ static long audio_effects_ioctl(struct file *file, unsigned int cmd,
 			 effects->config.input.num_buf,
 			 effects->config.input.sample_rate,
 			 effects->config.input.num_channels);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_EFFECTS_SET_BUF_LEN: {
@@ -503,7 +550,10 @@ static long audio_effects_ioctl(struct file *file, unsigned int cmd,
 
 		buf_avail.input_num_avail = atomic_read(&effects->in_count);
 		buf_avail.output_num_avail = atomic_read(&effects->out_count);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		pr_debug("%s: write buf avail: %d, read buf avail: %d\n",
 			 __func__, buf_avail.output_num_avail,
 			 buf_avail.input_num_avail);
@@ -513,20 +563,32 @@ static long audio_effects_ioctl(struct file *file, unsigned int cmd,
 				__func__);
 			rc = -EFAULT;
 		}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
 		break;
 	}
 	case AUDIO_EFFECTS_SET_PP_PARAMS: {
 		mutex_lock(&effects->lock);
+=======
+		break;
+	}
+	case AUDIO_EFFECTS_SET_PP_PARAMS: {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (copy_from_user(argvalues, (void *)arg,
 				   MAX_PP_PARAMS_SZ*sizeof(long))) {
 			pr_err("%s: copy from user for pp params failed\n",
 				__func__);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
 			return -EFAULT;
 		}
 		rc = audio_effects_set_pp_param(effects, argvalues);
 		mutex_unlock(&effects->lock);
+=======
+			return -EFAULT;
+		}
+		rc = audio_effects_set_pp_param(effects, argvalues);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	default:
@@ -592,14 +654,20 @@ static long audio_effects_compat_ioctl(struct file *file, unsigned int cmd,
 	case AUDIO_SET_EFFECTS_CONFIG32: {
 		struct msm_hwacc_effects_config32 config32;
 		struct msm_hwacc_effects_config *config = &effects->config;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		memset(&effects->config, 0, sizeof(effects->config));
 		if (copy_from_user(&config32, (void *)arg,
 				   sizeof(config32))) {
 			pr_err("%s: copy to user for AUDIO_SET_EFFECTS_CONFIG failed\n",
 				__func__);
 			rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			break;
 		}
 		config->input.buf_size = config32.input.buf_size;
@@ -636,19 +704,28 @@ static long audio_effects_compat_ioctl(struct file *file, unsigned int cmd,
 			 effects->config.input.num_buf,
 			 effects->config.input.sample_rate,
 			 effects->config.input.num_channels);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_EFFECTS_SET_BUF_LEN32: {
 		struct msm_hwacc_buf_cfg32 buf_cfg32;
 		struct msm_hwacc_effects_config *config = &effects->config;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (copy_from_user(&buf_cfg32, (void *)arg,
 				   sizeof(buf_cfg32))) {
 			pr_err("%s: copy from user for AUDIO_EFFECTS_SET_BUF_LEN failed\n",
 				__func__);
 			rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			break;
 		}
 		config->buf_cfg.input_len = buf_cfg32.input_len;
@@ -656,7 +733,10 @@ static long audio_effects_compat_ioctl(struct file *file, unsigned int cmd,
 		pr_debug("%s: write buf len: %d, read buf len: %d\n",
 			 __func__, effects->config.buf_cfg.output_len,
 			 effects->config.buf_cfg.input_len);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_EFFECTS_GET_BUF_AVAIL32: {
@@ -664,7 +744,10 @@ static long audio_effects_compat_ioctl(struct file *file, unsigned int cmd,
 
 		memset(&buf_avail, 0, sizeof(buf_avail));
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		buf_avail.input_num_avail = atomic_read(&effects->in_count);
 		buf_avail.output_num_avail = atomic_read(&effects->out_count);
 		pr_debug("%s: write buf avail: %d, read buf avail: %d\n",
@@ -676,26 +759,38 @@ static long audio_effects_compat_ioctl(struct file *file, unsigned int cmd,
 				__func__);
 			rc = -EFAULT;
 		}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_EFFECTS_SET_PP_PARAMS32: {
 		long argvalues[MAX_PP_PARAMS_SZ] = {0};
 		int argvalues32[MAX_PP_PARAMS_SZ] = {0};
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_lock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (copy_from_user(argvalues32, (void *)arg,
 				   MAX_PP_PARAMS_SZ*sizeof(int))) {
 			pr_err("%s: copy from user failed for pp params\n",
 				__func__);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			return -EFAULT;
 		}
 		for (i = 0; i < MAX_PP_PARAMS_SZ; i++)
 			argvalues[i] = argvalues32[i];
 
 		rc = audio_effects_set_pp_param(effects, argvalues);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		mutex_unlock(&effects->lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	}
 	case AUDIO_START32: {

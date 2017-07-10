@@ -647,7 +647,11 @@ limEncryptAuthFrame(tpAniSirGlobal pMac, tANI_U8 keyId, tANI_U8 *pKey, tANI_U8 *
  */
 
 void
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 limComputeCrc32(tANI_U8 *pDest, tANI_U8 * pSrc, tANI_U16 len)
+=======
+limComputeCrc32(tANI_U8 *pDest, tANI_U8 * pSrc, tANI_U8 len)
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 {
     tANI_U32 crc;
     int i;

@@ -86,7 +86,11 @@ unsigned long arch_get_unmapped_area(struct file *filp, unsigned long addr,
 		/* At this point:  (!vmm || addr < vmm->vm_end). */
 		if (TASK_SIZE - len < addr)
 			return -ENOMEM;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (!vmm || addr + len <= vm_start_gap(vmm))
+=======
+		if (!vmm || addr + len <= vmm->vm_start)
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			return addr;
 		addr = vmm->vm_end;
 		if (flags & MAP_SHARED)

@@ -17,8 +17,12 @@
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 #define S_I2C_DBG(fmt, args...) pr_debug(fmt, ##args)
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 #define MAX_I2C_ADDR_TYPE_SIZE (MSM_CAMERA_I2C_3B_ADDR + 1)
 #define MAX_I2C_DATA_TYPE_SIZE (MSM_CAMERA_I2C_SET_BYTE_WRITE_MASK_DATA + 1)
+=======
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 #define I2C_COMPARE_MATCH 0
 #define I2C_COMPARE_MISMATCH 1
 #define I2C_POLL_MAX_ITERATION 20
@@ -28,7 +32,11 @@ int32_t msm_camera_cci_i2c_read(struct msm_camera_i2c_client *client,
 	enum msm_camera_i2c_data_type data_type)
 {
 	int32_t rc = -EFAULT;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned char buf[MAX_I2C_ADDR_TYPE_SIZE + MAX_I2C_DATA_TYPE_SIZE];
+=======
+	unsigned char buf[client->addr_type+data_type];
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	struct msm_camera_cci_ctrl cci_ctrl;
 
 	if ((client->addr_type != MSM_CAMERA_I2C_BYTE_ADDR

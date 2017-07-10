@@ -6,7 +6,11 @@
  * Copyright (C) 2008 Nokia Corporation
  * Copyright (C) 2009 Samsung Electronics
  *			Author: Michal Nazarewicz (mina86@mina86.com)
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
  * Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2
@@ -1279,6 +1283,11 @@ rndis_qc_bind_config_vendor(struct usb_configuration *c, u8 ethaddr[ETH_ALEN],
 	rndis->port.func.suspend = rndis_qc_suspend;
 	rndis->port.func.resume = rndis_qc_resume;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	_rndis_qc = rndis;
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (rndis->xport == USB_GADGET_XPORT_BAM2BAM_IPA) {
 		status = rndis_ipa_init(&rndis_ipa_params);
 		if (status) {
@@ -1294,8 +1303,11 @@ rndis_qc_bind_config_vendor(struct usb_configuration *c, u8 ethaddr[ETH_ALEN],
 		goto fail;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	_rndis_qc = rndis;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return 0;
 
 fail:
@@ -1307,6 +1319,7 @@ fail:
 
 static int rndis_qc_open_dev(struct inode *ip, struct file *fp)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	int ret = 0;
 	unsigned long flags;
 	pr_info("Open rndis QC driver\n");
@@ -1316,10 +1329,18 @@ static int rndis_qc_open_dev(struct inode *ip, struct file *fp)
 		pr_err("rndis_qc_dev not created yet\n");
 		ret = -ENODEV;
 		goto fail;
+=======
+	pr_info("Open rndis QC driver\n");
+
+	if (!_rndis_qc) {
+		pr_err("rndis_qc_dev not created yet\n");
+		return -ENODEV;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	if (rndis_qc_lock(&_rndis_qc->open_excl)) {
 		pr_err("Already opened\n");
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		ret = -EBUSY;
 		goto fail;
 	}
@@ -1332,10 +1353,20 @@ fail:
 		pr_info("rndis QC file opened\n");
 
 	return ret;
+=======
+		return -EBUSY;
+	}
+
+	fp->private_data = _rndis_qc;
+	pr_info("rndis QC file opened\n");
+
+	return 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static int rndis_qc_release_dev(struct inode *ip, struct file *fp)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned long flags;
 	pr_info("Close rndis QC file\n");
 
@@ -1348,11 +1379,19 @@ static int rndis_qc_release_dev(struct inode *ip, struct file *fp)
 	}
 	rndis_qc_unlock(&_rndis_qc->open_excl);
 	spin_unlock_irqrestore(&rndis_lock, flags);
+=======
+	struct f_rndis_qc	*rndis = fp->private_data;
+
+	pr_info("Close rndis QC file\n");
+	rndis_qc_unlock(&rndis->open_excl);
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return 0;
 }
 
 static long rndis_qc_ioctl(struct file *fp, unsigned cmd, unsigned long arg)
 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	u8 qc_max_pkt_per_xfer = 0;
 	u32 qc_max_pkt_size = 0;
 	int ret = 0;
@@ -1382,29 +1421,58 @@ static long rndis_qc_ioctl(struct file *fp, unsigned cmd, unsigned long arg)
 		ret = copy_to_user((void __user *)arg,
 					&qc_max_pkt_per_xfer,
 					sizeof(qc_max_pkt_per_xfer));
+=======
+	struct f_rndis_qc	*rndis = fp->private_data;
+	int ret = 0;
+
+	pr_info("Received command %d\n", cmd);
+
+	if (rndis_qc_lock(&rndis->ioctl_excl))
+		return -EBUSY;
+
+	switch (cmd) {
+	case RNDIS_QC_GET_MAX_PKT_PER_XFER:
+		ret = copy_to_user((void __user *)arg,
+					&rndis->ul_max_pkt_per_xfer,
+					sizeof(rndis->ul_max_pkt_per_xfer));
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (ret) {
 			pr_err("copying to user space failed\n");
 			ret = -EFAULT;
 		}
 		pr_info("Sent UL max packets per xfer %d\n",
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				qc_max_pkt_per_xfer);
 		break;
 	case RNDIS_QC_GET_MAX_PKT_SIZE:
 		ret = copy_to_user((void __user *)arg,
 					&qc_max_pkt_size,
 					sizeof(qc_max_pkt_size));
+=======
+				rndis->ul_max_pkt_per_xfer);
+		break;
+	case RNDIS_QC_GET_MAX_PKT_SIZE:
+		ret = copy_to_user((void __user *)arg,
+					&rndis->max_pkt_size,
+					sizeof(rndis->max_pkt_size));
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (ret) {
 			pr_err("copying to user space failed\n");
 			ret = -EFAULT;
 		}
 		pr_debug("Sent max packet size %d\n",
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 				qc_max_pkt_size);
+=======
+				rndis->max_pkt_size);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		break;
 	default:
 		pr_err("Unsupported IOCTL\n");
 		ret = -EINVAL;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_lock_irqsave(&rndis_lock, flags);
 
 	if (!_rndis_qc) {
@@ -1416,6 +1484,10 @@ static long rndis_qc_ioctl(struct file *fp, unsigned cmd, unsigned long arg)
 
 fail:
 	spin_unlock_irqrestore(&rndis_lock, flags);
+=======
+	rndis_qc_unlock(&rndis->ioctl_excl);
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return ret;
 }
 
@@ -1438,11 +1510,18 @@ static int rndis_qc_init(void)
 
 	pr_info("initialize rndis QC instance\n");
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	spin_lock_init(&rndis_lock);
 
 	ret = misc_register(&rndis_qc_device);
 	if (ret)
 		pr_err("rndis QC driver failed to register\n");
+=======
+	ret = misc_register(&rndis_qc_device);
+	if (ret)
+		pr_err("rndis QC driver failed to register\n");
+	spin_lock_init(&rndis_lock);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	ret = bam_data_setup(USB_FUNC_RNDIS, RNDIS_QC_NO_PORTS);
 	if (ret) {

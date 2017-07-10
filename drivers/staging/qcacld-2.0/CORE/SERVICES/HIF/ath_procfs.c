@@ -90,16 +90,23 @@ static ssize_t ath_procfs_diag_read(struct file *file, char __user *buf,
 	int rv;
 	A_UINT8 *read_buffer = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	hif_hdl = get_hif_hdl_from_file(file);
 	if (hif_addr_in_boundary(hif_hdl, (A_UINT32)(*pos)))
 		return -EINVAL;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	read_buffer = (A_UINT8 *)vos_mem_malloc(count);
 	if (NULL == read_buffer) {
 		pr_debug("%s: vos_mem_alloc failed\n", __func__);
 		return -EINVAL;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	hif_hdl = get_hif_hdl_from_file(file);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	pr_debug("rd buff 0x%p cnt %zu offset 0x%x buf 0x%p\n",
 			read_buffer,count,
 			(int)*pos, buf);
@@ -132,9 +139,12 @@ static ssize_t ath_procfs_diag_write(struct file *file, const char __user *buf,
 	int rv;
 	A_UINT8 *write_buffer = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	hif_hdl = get_hif_hdl_from_file(file);
 	if (hif_addr_in_boundary(hif_hdl, (A_UINT32)(*pos)))
 		return -EINVAL;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	write_buffer = (A_UINT8 *)vos_mem_malloc(count);
 	if (NULL == write_buffer) {
 		pr_debug("%s: vos_mem_alloc failed\n", __func__);
@@ -145,6 +155,10 @@ static ssize_t ath_procfs_diag_write(struct file *file, const char __user *buf,
 		return -EFAULT;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	hif_hdl = get_hif_hdl_from_file(file);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	pr_debug("wr buff 0x%p buf 0x%p cnt %zu offset 0x%x value 0x%x\n",
 			write_buffer, buf, count,
 			(int)*pos, *((A_UINT32 *)write_buffer));

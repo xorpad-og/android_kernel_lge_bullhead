@@ -1285,8 +1285,11 @@ enum qca_wlan_vendor_attr_pno_config_params {
 	 */
 	QCA_WLAN_VENDOR_ATTR_EPNO_BAND5GHZ_BONUS = 22,
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/* Unsigned 32-bit value, representing the PNO Request ID */
 	QCA_WLAN_VENDOR_ATTR_PNO_CONFIG_REQUEST_ID = 23,
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	/* keep last */
 	QCA_WLAN_VENDOR_ATTR_PNO_AFTER_LAST,

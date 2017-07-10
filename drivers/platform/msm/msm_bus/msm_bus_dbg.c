@@ -1,5 +1,9 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2010-2012, 2014-2017, The Linux Foundation. All rights
  * reserved.
+=======
+/* Copyright (c) 2010-2012, 2014, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -38,7 +42,10 @@
 static struct dentry *clients;
 static struct dentry *dir;
 static DEFINE_MUTEX(msm_bus_dbg_fablist_lock);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static DEFINE_RT_MUTEX(msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 struct msm_bus_dbg_state {
 	uint32_t cl;
 	uint8_t enable;
@@ -290,9 +297,13 @@ static ssize_t client_data_read(struct file *file, char __user *buf,
 	struct msm_bus_cldata *cldata = NULL;
 	const struct msm_bus_client_handle *handle = file->private_data;
 	int found = 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	ssize_t ret;
 
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if ((cldata->clid == cl) ||
 			(cldata->handle && (cldata->handle == handle))) {
@@ -301,6 +312,7 @@ static ssize_t client_data_read(struct file *file, char __user *buf,
 		}
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!found) {
 		rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 		return 0;
@@ -312,6 +324,14 @@ static ssize_t client_data_read(struct file *file, char __user *buf,
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 
 	return ret;
+=======
+	if (!found)
+		return 0;
+
+	bsize = cldata->size;
+	return simple_read_from_buffer(buf, count, ppos,
+		cldata->buffer, bsize);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static int client_data_open(struct inode *inode, struct file *file)
@@ -347,9 +367,13 @@ int msm_bus_dbg_add_client(const struct msm_bus_client_handle *pdata)
 		return -ENOMEM;
 	}
 	cldata->handle = pdata;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
 	list_add_tail(&cldata->list, &cl_list);
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+	list_add_tail(&cldata->list, &cl_list);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return 0;
 }
 
@@ -362,7 +386,10 @@ int msm_bus_dbg_rec_transaction(const struct msm_bus_client_handle *pdata,
 	bool found = false;
 	char *buf = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (cldata->handle == pdata) {
 			found = true;
@@ -370,15 +397,23 @@ int msm_bus_dbg_rec_transaction(const struct msm_bus_client_handle *pdata,
 		}
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!found) {
 		rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 		return -ENOENT;
 	}
+=======
+	if (!found)
+		return -ENOENT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (cldata->file == NULL) {
 		if (pdata->name == NULL) {
 			MSM_BUS_DBG("Client doesn't have a name\n");
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			return -EINVAL;
 		}
 		pr_err("\n%s setting up debugfs %s", __func__, pdata->name);
@@ -408,7 +443,10 @@ int msm_bus_dbg_rec_transaction(const struct msm_bus_client_handle *pdata,
 	i += scnprintf(buf + i, MAX_BUFF_SIZE - i, "%llu  ", ib);
 	i += scnprintf(buf + i, MAX_BUFF_SIZE - i, "\n");
 	cldata->size = i;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	trace_bus_update_request((int)ts.tv_sec, (int)ts.tv_nsec,
 		pdata->name, pdata->mas, pdata->slv, ab, ib,
@@ -421,7 +459,10 @@ void msm_bus_dbg_remove_client(const struct msm_bus_client_handle *pdata)
 {
 	struct msm_bus_cldata *cldata = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (cldata->handle == pdata) {
 			debugfs_remove(cldata->file);
@@ -430,7 +471,10 @@ void msm_bus_dbg_remove_client(const struct msm_bus_client_handle *pdata)
 			break;
 		}
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static int msm_bus_dbg_record_client(const struct msm_bus_scale_pdata *pdata,
@@ -448,9 +492,13 @@ static int msm_bus_dbg_record_client(const struct msm_bus_scale_pdata *pdata,
 	cldata->clid = clid;
 	cldata->file = file;
 	cldata->size = 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
 	list_add_tail(&cldata->list, &cl_list);
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+	list_add_tail(&cldata->list, &cl_list);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return 0;
 }
 
@@ -458,7 +506,10 @@ static void msm_bus_dbg_free_client(uint32_t clid)
 {
 	struct msm_bus_cldata *cldata = NULL;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (cldata->clid == clid) {
 			debugfs_remove(cldata->file);
@@ -467,7 +518,10 @@ static void msm_bus_dbg_free_client(uint32_t clid)
 			break;
 		}
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 static int msm_bus_dbg_fill_cl_buffer(const struct msm_bus_scale_pdata *pdata,
@@ -479,7 +533,10 @@ static int msm_bus_dbg_fill_cl_buffer(const struct msm_bus_scale_pdata *pdata,
 	struct timespec ts;
 	int found = 0;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (cldata->clid == clid) {
 			found = 1;
@@ -487,6 +544,7 @@ static int msm_bus_dbg_fill_cl_buffer(const struct msm_bus_scale_pdata *pdata,
 		}
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!found) {
 		rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 		return -ENOENT;
@@ -495,6 +553,13 @@ static int msm_bus_dbg_fill_cl_buffer(const struct msm_bus_scale_pdata *pdata,
 	if (cldata->file == NULL) {
 		if (pdata->name == NULL) {
 			rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+	if (!found)
+		return -ENOENT;
+
+	if (cldata->file == NULL) {
+		if (pdata->name == NULL) {
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			MSM_BUS_DBG("Client doesn't have a name\n");
 			return -EINVAL;
 		}
@@ -543,11 +608,29 @@ static int msm_bus_dbg_fill_cl_buffer(const struct msm_bus_scale_pdata *pdata,
 
 	cldata->index = index;
 	cldata->size = i;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 
 	return i;
 }
 
+=======
+	return i;
+}
+
+static int msm_bus_dbg_update_request(struct msm_bus_cldata *cldata, int index)
+{
+	int ret = 0;
+
+	if ((index < 0) || (index > cldata->pdata->num_usecases)) {
+		MSM_BUS_DBG("Invalid index!\n");
+		return -EINVAL;
+	}
+	ret = msm_bus_scale_client_update_request(cldata->clid, index);
+	return ret;
+}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 static ssize_t  msm_bus_dbg_update_request_write(struct file *file,
 	const char __user *ubuf, size_t cnt, loff_t *ppos)
 {
@@ -557,13 +640,17 @@ static ssize_t  msm_bus_dbg_update_request_write(struct file *file,
 	char *chid;
 	char *buf = kmalloc((sizeof(char) * (cnt + 1)), GFP_KERNEL);
 	int found = 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	uint32_t clid;
 	ssize_t res = cnt;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (!buf || IS_ERR(buf)) {
 		MSM_BUS_ERR("Memory allocation for buffer failed\n");
 		return -ENOMEM;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (cnt == 0) {
 		res = 0;
 		goto out;
@@ -572,11 +659,20 @@ static ssize_t  msm_bus_dbg_update_request_write(struct file *file,
 		res = -EFAULT;
 		goto out;
 	}
+=======
+	if (cnt == 0)
+		return 0;
+	if (copy_from_user(buf, ubuf, cnt))
+		return -EFAULT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	buf[cnt] = '\0';
 	chid = buf;
 	MSM_BUS_DBG("buffer: %s\n size: %zu\n", buf, sizeof(ubuf));
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (strnstr(chid, cldata->pdata->name, cnt)) {
 			found = 1;
@@ -587,16 +683,21 @@ static ssize_t  msm_bus_dbg_update_request_write(struct file *file,
 				if (ret) {
 					MSM_BUS_DBG("Index conversion"
 						" failed\n");
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 					rt_mutex_unlock(
 						&msm_bus_dbg_cllist_lock);
 					res = -EFAULT;
 					goto out;
+=======
+					return -EFAULT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 				}
 			} else {
 				MSM_BUS_DBG("Error parsing input. Index not"
 					" found\n");
 				found = 0;
 			}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			if ((index < 0) ||
 					(index > cldata->pdata->num_usecases)) {
 				MSM_BUS_DBG("Invalid index!\n");
@@ -616,6 +717,16 @@ static ssize_t  msm_bus_dbg_update_request_write(struct file *file,
 out:
 	kfree(buf);
 	return res;
+=======
+			break;
+		}
+	}
+
+	if (found)
+		msm_bus_dbg_update_request(cldata, index);
+	kfree(buf);
+	return cnt;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 /**
@@ -638,10 +749,15 @@ static ssize_t fabric_data_read(struct file *file, char __user *buf,
 			break;
 		}
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!found) {
 		mutex_unlock(&msm_bus_dbg_fablist_lock);
 		return -ENOENT;
 	}
+=======
+	if (!found)
+		return -ENOENT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	bsize = fablist->size;
 	ret = simple_read_from_buffer(buf, count, ppos,
 		fablist->buffer, bsize);
@@ -730,10 +846,15 @@ static int msm_bus_dbg_fill_fab_buffer(const char *fabname,
 			break;
 		}
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	if (!found) {
 		mutex_unlock(&msm_bus_dbg_fablist_lock);
 		return -ENOENT;
 	}
+=======
+	if (!found)
+		return -ENOENT;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	if (fablist->file == NULL) {
 		MSM_BUS_DBG("Fabric dbg entry does not exist\n");
@@ -882,7 +1003,10 @@ static int __init msm_bus_debugfs_init(void)
 		goto err;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry(cldata, &cl_list, list) {
 		if (cldata->pdata) {
 			if (cldata->pdata->name == NULL) {
@@ -902,7 +1026,10 @@ static int __init msm_bus_debugfs_init(void)
 							&client_data_fops);
 		}
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	mutex_lock(&msm_bus_dbg_fablist_lock);
 	list_for_each_entry(fablist, &fabdata_list, list) {
@@ -911,7 +1038,10 @@ static int __init msm_bus_debugfs_init(void)
 		if (fablist->file == NULL) {
 			MSM_BUS_DBG("Cannot create files for commit data\n");
 			kfree(rules_buf);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_unlock(&msm_bus_dbg_fablist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			goto err;
 		}
 	}
@@ -931,14 +1061,20 @@ static void __exit msm_bus_dbg_teardown(void)
 	struct msm_bus_cldata *cldata = NULL, *cldata_temp;
 
 	debugfs_remove_recursive(dir);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	rt_mutex_lock(&msm_bus_dbg_cllist_lock);
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	list_for_each_entry_safe(cldata, cldata_temp, &cl_list, list) {
 		list_del(&cldata->list);
 		kfree(cldata);
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	mutex_lock(&msm_bus_dbg_fablist_lock);
 	list_for_each_entry_safe(fablist, fablist_temp, &fabdata_list, list) {
 		list_del(&fablist->list);

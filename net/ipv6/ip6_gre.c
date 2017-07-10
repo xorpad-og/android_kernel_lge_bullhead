@@ -364,6 +364,7 @@ static void ip6gre_tunnel_uninit(struct net_device *dev)
 
 
 static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		       u8 type, u8 code, int offset, __be32 info)
 {
 	const struct gre_base_hdr *greh;
@@ -395,6 +396,37 @@ static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 
 	t = ip6gre_tunnel_lookup(skb->dev, &ipv6h->daddr, &ipv6h->saddr,
 				 key, greh->protocol);
+=======
+		u8 type, u8 code, int offset, __be32 info)
+{
+	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *)skb->data;
+	__be16 *p = (__be16 *)(skb->data + offset);
+	int grehlen = offset + 4;
+	struct ip6_tnl *t;
+	__be16 flags;
+
+	flags = p[0];
+	if (flags&(GRE_CSUM|GRE_KEY|GRE_SEQ|GRE_ROUTING|GRE_VERSION)) {
+		if (flags&(GRE_VERSION|GRE_ROUTING))
+			return;
+		if (flags&GRE_KEY) {
+			grehlen += 4;
+			if (flags&GRE_CSUM)
+				grehlen += 4;
+		}
+	}
+
+	/* If only 8 bytes returned, keyed message will be dropped here */
+	if (!pskb_may_pull(skb, grehlen))
+		return;
+	ipv6h = (const struct ipv6hdr *)skb->data;
+	p = (__be16 *)(skb->data + offset);
+
+	t = ip6gre_tunnel_lookup(skb->dev, &ipv6h->daddr, &ipv6h->saddr,
+				flags & GRE_KEY ?
+				*(((__be32 *)p) + (grehlen / 4) - 1) : 0,
+				p[1]);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (t == NULL)
 		return;
 

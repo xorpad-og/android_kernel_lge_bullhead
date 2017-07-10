@@ -594,12 +594,19 @@ config TELCLOCK
 	  controlling the behavior of this hardware.
 
 config DEVPORT
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	bool "/dev/port character device"
 	depends on ISA || PCI
 	default y
 	help
 	  Say Y here if you want to support the /dev/port device. The
 	  /dev/port device is similar to /dev/mem, but for I/O ports.
+=======
+	bool
+	depends on !M68K
+	depends on ISA || PCI
+	default y
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 source "drivers/s390/char/Kconfig"
 

@@ -1,4 +1,8 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2011-2014, 2017 The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -37,10 +41,13 @@
 #define CLK_LANE_OFFSET                             1
 #define NUM_LANES_OFFSET                            4
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static struct camera_vreg_t csiphy_vreg_info[] = {
 	{"qcom,mipi-csi-vdd", 0, 0, 12000},
 };
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 
@@ -312,6 +319,7 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 	}
 	CDBG("%s:%d called\n", __func__, __LINE__);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rc = msm_camera_config_vreg(&csiphy_dev->pdev->dev,
 		csiphy_vreg_info, ARRAY_SIZE(csiphy_vreg_info),
 		NULL, 0, &csiphy_dev->csi_vdd, 1);
@@ -341,6 +349,8 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 		}
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (csiphy_dev->hw_dts_version < CSIPHY_VERSION_V30) {
 		rc = msm_cam_clk_enable(&csiphy_dev->pdev->dev,
 			csiphy_clk_info, csiphy_dev->csiphy_clk,
@@ -401,6 +411,7 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 		csiphy_dev->hw_version);
 	csiphy_dev->csiphy_state = CSIPHY_POWER_UP;
 	return 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 csiphy_enable_regulator_gdscr_fail:
 	rc = msm_camera_enable_vreg(&csiphy_dev->pdev->dev,
@@ -415,6 +426,8 @@ csiphy_vreg_config_fail:
 	csiphy_dev->base = NULL;
 	return rc;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 #else
 static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
@@ -450,6 +463,7 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 		rc = -ENOMEM;
 		return rc;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	rc = msm_camera_config_vreg(&csiphy_dev->pdev->dev,
 		csiphy_vreg_info, ARRAY_SIZE(csiphy_vreg_info),
@@ -480,6 +494,8 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 		}
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (csiphy_dev->hw_dts_version <= CSIPHY_VERSION_V22) {
 		CDBG("%s:%d called\n", __func__, __LINE__);
 		rc = msm_cam_clk_enable(&csiphy_dev->pdev->dev,
@@ -538,6 +554,7 @@ static int msm_csiphy_init(struct csiphy_device *csiphy_dev)
 		csiphy_dev->hw_version);
 	csiphy_dev->csiphy_state = CSIPHY_POWER_UP;
 	return 0;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 csiphy_enable_regulator_gdscr_fail:
 	rc = msm_camera_enable_vreg(&csiphy_dev->pdev->dev,
@@ -551,6 +568,8 @@ csiphy_vreg_config_fail:
 	iounmap(csiphy_dev->base);
 	csiphy_dev->base = NULL;
 	return rc;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 #endif
 
@@ -638,6 +657,7 @@ static int msm_csiphy_release(struct csiphy_device *csiphy_dev, void *arg)
 			csiphy_dev->num_clk, 0);
 			iounmap(csiphy_dev->clk_mux_base);
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	msm_camera_enable_vreg(&csiphy_dev->pdev->dev,
 		csiphy_vreg_info, ARRAY_SIZE(csiphy_vreg_info),
@@ -651,6 +671,8 @@ static int msm_csiphy_release(struct csiphy_device *csiphy_dev, void *arg)
 		regulator_put(csiphy_dev->reg_ptr);
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	iounmap(csiphy_dev->base);
 	csiphy_dev->base = NULL;
 	csiphy_dev->csiphy_state = CSIPHY_POWER_DOWN;
@@ -739,6 +761,7 @@ static int msm_csiphy_release(struct csiphy_device *csiphy_dev, void *arg)
 			iounmap(csiphy_dev->clk_mux_base);
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	msm_camera_enable_vreg(&csiphy_dev->pdev->dev,
 		csiphy_vreg_info, ARRAY_SIZE(csiphy_vreg_info),
 		NULL, 0, &csiphy_dev->csi_vdd, 0);
@@ -751,6 +774,8 @@ static int msm_csiphy_release(struct csiphy_device *csiphy_dev, void *arg)
 		regulator_put(csiphy_dev->reg_ptr);
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	iounmap(csiphy_dev->base);
 	csiphy_dev->base = NULL;
 	csiphy_dev->csiphy_state = CSIPHY_POWER_DOWN;
@@ -940,7 +965,10 @@ static int msm_csiphy_get_clk_info(struct csiphy_device *csiphy_dev,
 static int csiphy_probe(struct platform_device *pdev)
 {
 	struct csiphy_device *new_csiphy_dev;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	uint32_t csi_vdd_voltage = 0;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	int rc = 0;
 
 	new_csiphy_dev = kzalloc(sizeof(struct csiphy_device), GFP_KERNEL);
@@ -974,6 +1002,7 @@ static int csiphy_probe(struct platform_device *pdev)
 		return -EFAULT;
 	}
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	rc = of_property_read_u32((&pdev->dev)->of_node,
 		"qcom,csi-vdd-voltage", &csi_vdd_voltage);
 	if (rc < 0) {
@@ -987,6 +1016,8 @@ static int csiphy_probe(struct platform_device *pdev)
 	csiphy_vreg_info[0].min_voltage = csi_vdd_voltage;
 	csiphy_vreg_info[0].max_voltage = csi_vdd_voltage;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	new_csiphy_dev->mem = platform_get_resource_byname(pdev,
 					IORESOURCE_MEM, "csiphy");
 	if (!new_csiphy_dev->mem) {

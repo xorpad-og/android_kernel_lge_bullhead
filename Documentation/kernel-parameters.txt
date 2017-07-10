@@ -2893,6 +2893,7 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	spia_pedr=
 	spia_peddr=
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	stack_guard_gap=	[MM]
 			override the default stack gap protection. The value
 			is in page units and it defines how many pages prior
@@ -2900,6 +2901,8 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			growing up) the main stack are reserved for no other
 			mapping. Default value is 256 pages.
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	stacktrace	[FTRACE]
 			Enabled the stack tracer on boot up.
 

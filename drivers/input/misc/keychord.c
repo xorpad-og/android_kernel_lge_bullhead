@@ -300,10 +300,15 @@ static ssize_t keychord_write(struct file *file, const char __user *buffer,
 
 	ret = input_register_handler(&kdev->input_handler);
 	if (ret) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		spin_lock_irqsave(&kdev->lock, flags);
 		kfree(kdev->keychords);
 		kdev->keychords = 0;
 		spin_unlock_irqrestore(&kdev->lock, flags);
+=======
+		kfree(keychords);
+		kdev->keychords = 0;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		return ret;
 	}
 	kdev->registered = 1;

@@ -711,6 +711,7 @@ limProcessAssocReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,
                 if(pAssocReq->rsn.length)
                 {
                     // Unpack the RSN IE
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
                     if (dot11fUnpackIeRSN(pMac,
                                         &pAssocReq->rsn.info[0],
                                         pAssocReq->rsn.length,
@@ -723,6 +724,12 @@ limProcessAssocReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,
                             1, pHdr->sa, subType, 0,psessionEntry);
                         goto error;
                     }
+=======
+                    dot11fUnpackIeRSN(pMac,
+                                        &pAssocReq->rsn.info[0],
+                                        pAssocReq->rsn.length,
+                                        &Dot11fIERSN);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
                     /* Check RSN version is supported or not */
                     if(SIR_MAC_OUI_VERSION_1 == Dot11fIERSN.version)
@@ -788,6 +795,7 @@ limProcessAssocReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,
                 // Unpack the WPA IE
                 if(pAssocReq->wpa.length)
                 {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
                     if (dot11fUnpackIeWPA(pMac,
                                         &pAssocReq->wpa.info[4], //OUI is not taken care
                                         pAssocReq->wpa.length,
@@ -799,6 +807,12 @@ limProcessAssocReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,
                                 1, pHdr->sa, subType, 0,psessionEntry);
                         goto error;
                     }
+=======
+                    dot11fUnpackIeWPA(pMac,
+                                        &pAssocReq->wpa.info[4], //OUI is not taken care
+                                        pAssocReq->wpa.length,
+                                        &Dot11fIEWPA);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
                     /* check the groupwise and pairwise cipher suites */
                     if(eSIR_SUCCESS != (status = limCheckRxWPAIeMatch(pMac, Dot11fIEWPA, psessionEntry, pAssocReq->HTCaps.present)))
                     {

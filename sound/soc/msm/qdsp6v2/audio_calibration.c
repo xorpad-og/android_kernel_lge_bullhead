@@ -453,12 +453,15 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			data->cal_type.cal_hdr.buffer_number);
 		ret = -EINVAL;
 		goto done;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	} else if ((data->hdr.cal_type_size + sizeof(data->hdr)) > size) {
 		pr_err("%s: cal type hdr size %zd + cal type size %d is greater than user buffer size %d\n",
 			__func__, sizeof(data->hdr), data->hdr.cal_type_size,
 			size);
 		ret = -EFAULT;
 		goto done;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 
@@ -496,7 +499,17 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			goto unlock;
 		if (data == NULL)
 			goto unlock;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		if (copy_to_user(arg, data,
+=======
+		if ((sizeof(data->hdr) + data->hdr.cal_type_size) > size) {
+			pr_err("%s: header size %zd plus cal type size %d are greater than data buffer size %d\n",
+				__func__, sizeof(data->hdr),
+				data->hdr.cal_type_size, size);
+			ret = -EFAULT;
+			goto unlock;
+		} else if (copy_to_user((void *)arg, data,
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			sizeof(data->hdr) + data->hdr.cal_type_size)) {
 			pr_err("%s: Could not copy cal type to user\n",
 				__func__);

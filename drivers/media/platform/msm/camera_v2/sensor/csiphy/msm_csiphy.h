@@ -1,4 +1,8 @@
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 /* Copyright (c) 2011-2014, 2017 The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -84,8 +88,11 @@ struct csiphy_device {
 	uint32_t is_3_1_20nm_hw;
 	uint32_t csiphy_clk_index;
 	uint32_t csiphy_max_clk;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct regulator *csi_vdd;
 	struct regulator *reg_ptr;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 };
 
 #define VIDIOC_MSM_CSIPHY_RELEASE \

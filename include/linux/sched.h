@@ -1671,6 +1671,16 @@ static inline pid_t task_tgid_nr(struct task_struct *tsk)
 	return tsk->tgid;
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+pid_t task_tgid_nr_ns(struct task_struct *tsk, struct pid_namespace *ns);
+
+static inline pid_t task_tgid_vnr(struct task_struct *tsk)
+{
+	return pid_vnr(task_tgid(tsk));
+}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 static inline pid_t task_pgrp_nr_ns(struct task_struct *tsk,
 					struct pid_namespace *ns)
@@ -1695,6 +1705,7 @@ static inline pid_t task_session_vnr(struct task_struct *tsk)
 	return __task_pid_nr_ns(tsk, PIDTYPE_SID, NULL);
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static inline pid_t task_tgid_nr_ns(struct task_struct *tsk, struct pid_namespace *ns)
 {
 	return __task_pid_nr_ns(tsk, __PIDTYPE_TGID, ns);
@@ -1705,6 +1716,8 @@ static inline pid_t task_tgid_vnr(struct task_struct *tsk)
 	return __task_pid_nr_ns(tsk, __PIDTYPE_TGID, NULL);
 }
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 /* obsolete, do not use */
 static inline pid_t task_pgrp_nr(struct task_struct *tsk)
 {

@@ -1,5 +1,9 @@
 /*
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
  * Copyright (c) 2011-2015, 2017 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2011-2015 The Linux Foundation. All rights reserved.
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -706,10 +710,13 @@ void ConvertQosMapsetFrame(tpAniSirGlobal pMac, tSirQosMapSet* Qos, tDot11fIEQos
     tANI_U8 i,j=0;
     if (dot11fIE->num_dscp_exceptions > 58)
         dot11fIE->num_dscp_exceptions = 58;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	if (dot11fIE->num_dscp_exceptions < 16)
 		return;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
     Qos->num_dscp_exceptions = (dot11fIE->num_dscp_exceptions - 16)/2;
     for (i = 0; i < Qos->num_dscp_exceptions; i++)
     {

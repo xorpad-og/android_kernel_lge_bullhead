@@ -150,9 +150,13 @@ static int snd_pcm_control_ioctl(struct snd_card *card,
 				err = -ENXIO;
 				goto _error;
 			}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			mutex_lock(&pcm->open_mutex);
 			err = snd_pcm_info_user(substream, info);
 			mutex_unlock(&pcm->open_mutex);
+=======
+			err = snd_pcm_info_user(substream, info);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		_error:
 			mutex_unlock(&register_mutex);
 			return err;

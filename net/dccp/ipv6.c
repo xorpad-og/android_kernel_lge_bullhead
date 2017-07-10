@@ -483,9 +483,12 @@ static struct sock *dccp_v6_request_recv_sock(struct sock *sk,
 		newsk->sk_backlog_rcv = dccp_v4_do_rcv;
 		newnp->pktoptions  = NULL;
 		newnp->opt	   = NULL;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		newnp->ipv6_mc_list = NULL;
 		newnp->ipv6_ac_list = NULL;
 		newnp->ipv6_fl_list = NULL;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		newnp->mcast_oif   = inet6_iif(skb);
 		newnp->mcast_hops  = ipv6_hdr(skb)->hop_limit;
 
@@ -561,10 +564,13 @@ static struct sock *dccp_v6_request_recv_sock(struct sock *sk,
 	/* Clone RX bits */
 	newnp->rxopt.all = np->rxopt.all;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	newnp->ipv6_mc_list = NULL;
 	newnp->ipv6_ac_list = NULL;
 	newnp->ipv6_fl_list = NULL;
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	/* Clone pktoptions received with SYN */
 	newnp->pktoptions = NULL;
 	if (ireq6->pktopts != NULL) {

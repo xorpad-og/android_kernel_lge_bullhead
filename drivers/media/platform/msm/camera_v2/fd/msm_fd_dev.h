@@ -215,7 +215,10 @@ struct msm_fd_device {
 
 	struct mutex lock;
 	spinlock_t slock;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	struct mutex recovery_lock;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	int ref_count;
 
 	int irq_num;

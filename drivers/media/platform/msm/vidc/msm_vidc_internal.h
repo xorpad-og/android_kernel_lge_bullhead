@@ -43,7 +43,10 @@
 #define DEFAULT_WIDTH 1920
 #define MIN_SUPPORTED_WIDTH 32
 #define MIN_SUPPORTED_HEIGHT 32
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 #define MAX_SUPPORTED_INSTANCES_COUNT 16
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 /* Maintains the number of FTB's between each FBD over a window */
 #define DCVS_FTB_WINDOW 32

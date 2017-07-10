@@ -32,6 +32,10 @@
 #include <linux/mutex.h>
 #include <linux/shmem_fs.h>
 #include <linux/ashmem.h>
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+#include <asm/cacheflush.h>
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 #include "ashmem.h"
 
@@ -658,6 +662,40 @@ static int ashmem_pin_unpin(struct ashmem_area *asma, unsigned long cmd,
 	return ret;
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+static int ashmem_cache_op(struct ashmem_area *asma,
+	void (*cache_func)(const void *vstart, const void *vend))
+{
+	int ret = 0;
+	struct vm_area_struct *vma;
+	if (!asma->vm_start)
+		return -EINVAL;
+
+	down_read(&current->mm->mmap_sem);
+	vma = find_vma(current->mm, asma->vm_start);
+	if (!vma) {
+		ret = -EINVAL;
+		goto done;
+	}
+	if (vma->vm_file != asma->file) {
+		ret = -EINVAL;
+		goto done;
+	}
+	if ((asma->vm_start + asma->size) > vma->vm_end) {
+		ret = -EINVAL;
+		goto done;
+	}
+	cache_func((void *)asma->vm_start,
+			(void *)(asma->vm_start + asma->size));
+done:
+	up_read(&current->mm->mmap_sem);
+	if (ret)
+		asma->vm_start = 0;
+	return ret;
+}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	struct ashmem_area *asma = file->private_data;
@@ -703,6 +741,18 @@ static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 			ashmem_shrink(&ashmem_shrinker, &sc);
 		}
 		break;
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	case ASHMEM_CACHE_FLUSH_RANGE:
+		ret = ashmem_cache_op(asma, &dmac_flush_range);
+		break;
+	case ASHMEM_CACHE_CLEAN_RANGE:
+		ret = ashmem_cache_op(asma, &dmac_clean_range);
+		break;
+	case ASHMEM_CACHE_INV_RANGE:
+		ret = ashmem_cache_op(asma, &dmac_inv_range);
+		break;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	}
 
 	return ret;

@@ -233,8 +233,12 @@ static struct fileIdentDesc *udf_find_entry(struct inode *dir,
 		if (!lfi)
 			continue;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		flen = udf_get_filename(dir->i_sb, nameptr, lfi, fname,
 					UDF_NAME_LEN);
+=======
+		flen = udf_get_filename(dir->i_sb, nameptr, fname, lfi);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		if (flen && udf_match(flen, fname, child->len, child->name))
 			goto out_ok;
 	}

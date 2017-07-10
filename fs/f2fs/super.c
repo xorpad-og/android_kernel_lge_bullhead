@@ -434,6 +434,7 @@ static int sanity_check_raw_super(struct super_block *sb,
 		f2fs_msg(sb, KERN_INFO, "Invalid log sectors per block");
 		return 1;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 	if (le32_to_cpu(raw_super->segment_count) > F2FS_MAX_SEGMENT) {
 		f2fs_msg(sb, KERN_INFO,
@@ -442,6 +443,8 @@ static int sanity_check_raw_super(struct super_block *sb,
 		return 1;
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	return 0;
 }
 
@@ -450,8 +453,11 @@ static int sanity_check_ckpt(struct f2fs_sb_info *sbi)
 	unsigned int total, fsmeta;
 	struct f2fs_super_block *raw_super = F2FS_RAW_SUPER(sbi);
 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	unsigned int main_segs, blocks_per_seg;
 	int i;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 
 	total = le32_to_cpu(raw_super->segment_count);
 	fsmeta = le32_to_cpu(raw_super->segment_count_ckpt);
@@ -463,6 +469,7 @@ static int sanity_check_ckpt(struct f2fs_sb_info *sbi)
 	if (fsmeta >= total)
 		return 1;
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	main_segs = le32_to_cpu(sbi->raw_super->segment_count_main);
 	blocks_per_seg = sbi->blocks_per_seg;
 
@@ -479,6 +486,8 @@ static int sanity_check_ckpt(struct f2fs_sb_info *sbi)
 		}
 	}
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	if (is_set_ckpt_flags(ckpt, CP_ERROR_FLAG)) {
 		f2fs_msg(sbi->sb, KERN_ERR, "A bug case: need to run fsck");
 		return 1;

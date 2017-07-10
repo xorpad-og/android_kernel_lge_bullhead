@@ -1,5 +1,9 @@
 snd-soc-qdsp6v2-objs += msm-dai-q6-v2.o msm-pcm-q6-v2.o msm-pcm-routing-v2.o \
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			msm-compress-q6-v2.o \
+=======
+			msm-compress-q6-v2.o msm-compr-q6-v2.o \
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 			msm-pcm-lpa-v2.o \
 			msm-pcm-afe-v2.o msm-pcm-voip-v2.o \
 			msm-pcm-voice-v2.o msm-dai-q6-hdmi-v2.o \

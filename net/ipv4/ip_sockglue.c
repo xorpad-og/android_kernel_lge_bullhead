@@ -1042,6 +1042,7 @@ void ipv4_pktinfo_prepare(struct sk_buff *skb)
 		pktinfo->ipi_ifindex = 0;
 		pktinfo->ipi_spec_dst.s_addr = 0;
 	}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 	/* We need to keep the dst for __ip_options_echo()
 	 * We could restrict the test to opt.ts_needtime || opt.srr,
 	 * but the following is good enough as IP options are not often used.
@@ -1050,6 +1051,9 @@ void ipv4_pktinfo_prepare(struct sk_buff *skb)
 		skb_dst_force(skb);
 	else
 		skb_dst_drop(skb);
+=======
+	skb_dst_drop(skb);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 }
 
 int ip_setsockopt(struct sock *sk, int level,

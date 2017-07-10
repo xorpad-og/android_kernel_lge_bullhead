@@ -1090,6 +1090,37 @@ int set_page_dirty(struct page *page);
 int set_page_dirty_lock(struct page *page);
 int clear_page_dirty_for_io(struct page *page);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+/* Is the vma a continuation of the stack vma above it? */
+static inline int vma_growsdown(struct vm_area_struct *vma, unsigned long addr)
+{
+	return vma && (vma->vm_end == addr) && (vma->vm_flags & VM_GROWSDOWN);
+}
+
+static inline int stack_guard_page_start(struct vm_area_struct *vma,
+					     unsigned long addr)
+{
+	return (vma->vm_flags & VM_GROWSDOWN) &&
+		(vma->vm_start == addr) &&
+		!vma_growsdown(vma->vm_prev, addr);
+}
+
+/* Is the vma a continuation of the stack vma below it? */
+static inline int vma_growsup(struct vm_area_struct *vma, unsigned long addr)
+{
+	return vma && (vma->vm_start == addr) && (vma->vm_flags & VM_GROWSUP);
+}
+
+static inline int stack_guard_page_end(struct vm_area_struct *vma,
+					   unsigned long addr)
+{
+	return (vma->vm_flags & VM_GROWSUP) &&
+		(vma->vm_end == addr) &&
+		!vma_growsup(vma->vm_next, addr);
+}
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 extern pid_t
 vm_is_stack(struct task_struct *task, struct vm_area_struct *vma, int in_group);
 
@@ -1631,7 +1662,10 @@ unsigned long ra_submit(struct file_ra_state *ra,
 			struct address_space *mapping,
 			struct file *filp);
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 extern unsigned long stack_guard_gap;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 /* Generic expand stack which grows the stack according to GROWS{UP,DOWN} */
 extern int expand_stack(struct vm_area_struct *vma, unsigned long address);
 
@@ -1660,6 +1694,7 @@ static inline struct vm_area_struct * find_vma_intersection(struct mm_struct * m
 	return vma;
 }
 
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 static inline unsigned long vm_start_gap(struct vm_area_struct *vma)
 {
 	unsigned long vm_start = vma->vm_start;
@@ -1684,6 +1719,8 @@ static inline unsigned long vm_end_gap(struct vm_area_struct *vma)
 	return vm_end;
 }
 
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 static inline unsigned long vma_pages(struct vm_area_struct *vma)
 {
 	return (vma->vm_end - vma->vm_start) >> PAGE_SHIFT;

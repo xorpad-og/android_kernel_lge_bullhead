@@ -628,6 +628,7 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
    pSmeBcnReportReq->channelList.numChannels = num_channels;
    if( pBeaconReq->measurement_request.Beacon.num_APChannelReport )
    {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
       tANI_U8 *ch_lst = pSmeBcnReportReq->channelList.channelNumber;
       uint8_t len;
       uint16_t ch_ctr = 0;
@@ -643,6 +644,16 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
                       APChannelReport[num_APChanReport].channelList, len);
 
          ch_ctr += len;
+=======
+      tANI_U8 *pChanList = pSmeBcnReportReq->channelList.channelNumber;
+      for( num_APChanReport = 0 ; num_APChanReport < pBeaconReq->measurement_request.Beacon.num_APChannelReport ; num_APChanReport++ )
+      {
+         vos_mem_copy(pChanList,
+          pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].channelList,
+          pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].num_channelList);
+
+         pChanList += pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].num_channelList;
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
       }
    }
 

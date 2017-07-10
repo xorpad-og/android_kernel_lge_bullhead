@@ -3880,6 +3880,7 @@ static int mdss_fb_get_metadata(struct msm_fb_data_type *mfd,
 		break;
 	case metadata_op_get_ion_fd:
 		if (mfd->fb_ion_handle) {
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			get_dma_buf(mfd->fbmem_buf);
 			metadata->data.fbmem_ionfd =
 				dma_buf_fd(mfd->fbmem_buf, 0);
@@ -3888,6 +3889,13 @@ static int mdss_fb_get_metadata(struct msm_fb_data_type *mfd,
 				pr_err("fd allocation failed. fd = %d\n",
 						metadata->data.fbmem_ionfd);
 			}
+=======
+			metadata->data.fbmem_ionfd =
+				dma_buf_fd(mfd->fbmem_buf, 0);
+			if (metadata->data.fbmem_ionfd < 0)
+				pr_err("fd allocation failed. fd = %d\n",
+						metadata->data.fbmem_ionfd);
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 		break;
 	case metadata_op_crc:

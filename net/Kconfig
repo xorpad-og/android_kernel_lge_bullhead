@@ -84,6 +84,10 @@ endif # if INET
 config ANDROID_PARANOID_NETWORK
 	bool "Only allow certain groups to create sockets"
 	default y
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
+=======
+	select SECURITY_ANDROID_GID_CAPABILITIES
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 	help
 		none
 

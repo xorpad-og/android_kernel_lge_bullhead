@@ -3628,6 +3628,7 @@ bool hif_is_80211_fw_wow_required(void)
 {
 	return false;
 }
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 
 /* hif_addr_in_boundary() - API to check if addr is with in PCIE BAR range
  * @hif_device:  context of cd
@@ -3654,3 +3655,5 @@ int hif_addr_in_boundary(HIF_DEVICE *hif_device, A_UINT32 offset)
 
 	return 0;
 }
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES

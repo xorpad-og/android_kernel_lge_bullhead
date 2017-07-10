@@ -12157,10 +12157,13 @@ static const struct iw_priv_args we_private_args[] = {
     {   WE_SET_MON_MODE_CHAN,
         IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 2,
         0, "setMonChan" },
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
     {
 	WLAN_PRIV_SET_FTIES,
 	IW_PRIV_TYPE_CHAR | MAX_FTIE_SIZE,
 	0, "set_ft_ies" },
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
     {   WE_DUMP_DP_TRACE_LEVEL,
         IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 2,
         0, "dump_dp_trace"},

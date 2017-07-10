@@ -82,7 +82,11 @@ struct hif_pci_pm_stats {
 struct hif_pci_softc {
     void __iomem *mem; /* PCI address. */
                        /* For efficiency, should be first in struct */
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
     size_t mem_len;
+=======
+
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
     struct device *dev;
     struct pci_dev *pdev;
     struct _NIC_DEV aps_osdev;

@@ -2164,7 +2164,11 @@ static struct snd_soc_dai_link msm8974_common_dai_links[] = {
 		.name = "MSM8974 Compr8",
 		.stream_name = "COMPR8",
 		.cpu_dai_name	= "MultiMedia8",
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 		.platform_name  = "msm-compress-dsp",
+=======
+		.platform_name  = "msm-compr-dsp",
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		.dynamic = 1,
 		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
 			 SND_SOC_DPCM_TRIGGER_POST},

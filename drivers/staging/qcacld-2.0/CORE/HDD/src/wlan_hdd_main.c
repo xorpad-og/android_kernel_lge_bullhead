@@ -4598,8 +4598,11 @@ static int hdd_set_rx_filter(hdd_adapter_t *adapter, bool action,
 				    MAC_ADDR_ARRAY(filter->multicastAddr[j]));
 				j++;
 			}
+<<<<<<< cdc93dcc4d75ca85c065fce4a314e1608372071a
 			if (j == SIR_MAX_NUM_MULTICAST_ADDRESS)
 				break;
+=======
+>>>>>>> Enable the CONFIG_SECURITY_ANDROID_GID_CAPABILITIES
 		}
 		filter->ulMulticastAddrCnt = j;
 		/* Set rx filter */
